@@ -29,11 +29,11 @@ internal static class InMemoryStorage
     {
         var mainWallet = new Wallet("Зарплатня", Currency.UAH);
         var savingsWallet = new Wallet("Скарбничка", Currency.USD);
-        var cryptoWallet = new Wallet("Інвестиції", Currency.EUR);
+        var investWallet = new Wallet("Інвестиції", Currency.EUR);
 
         _wallets.Add(mainWallet);
         _wallets.Add(savingsWallet);
-        _wallets.Add(cryptoWallet);
+        _wallets.Add(investWallet);
         
         _transactions.Add(new Transaction(mainWallet.Guid, 500, ExpenseType.Groceries, "Продукти в Сільпо"));
         _transactions.Add(new Transaction(mainWallet.Guid, 85, ExpenseType.Restaurants, "Кава"));
