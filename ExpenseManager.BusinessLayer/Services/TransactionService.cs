@@ -52,6 +52,19 @@ public class TransactionService
         }
     }
 
+    public IEnumerable<Transaction> GetAll()
+    {
+        try
+        {
+            return _repo.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
     public Transaction Update(Guid guid, int amount, ExpenseType expenseType, string description, DateTime date)
     {
         try

@@ -28,6 +28,11 @@ internal class WalletRepo : IWalletRepo
         return result;
     }
 
+    public IEnumerable<Wallet> GetAll()
+    {
+        return InMemoryStorage.Wallets;
+    }
+
     public Wallet Update(Wallet wallet)
     {
         throw new NotImplementedException("Storage is currently read-only mock.");

@@ -41,6 +41,11 @@ internal class TransactionRepo : ITransactionRepo
         return result;
     }
 
+    public IEnumerable<Transaction> GetAll()
+    {
+        return InMemoryStorage.Transactions;
+    }
+
     public Transaction Update(Transaction transaction)
     {
         throw new NotImplementedException("Storage is currently read-only mock.");

@@ -38,6 +38,19 @@ public class WalletService
             throw;
         }
     }
+
+    public IEnumerable<Wallet> GetAll()
+    {
+        try
+        {
+            return _repo.GetAll();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     public Wallet Update(Guid guid, string name, Currency currency)
     {
