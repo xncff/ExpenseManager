@@ -9,7 +9,7 @@ public class WalletService
     
     public WalletService(IWalletRepo repo)
     {
-        _repo = repo ?? throw new ArgumentNullException(nameof(repo));;
+        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
     public Wallet Create(string name, Currency currency)
