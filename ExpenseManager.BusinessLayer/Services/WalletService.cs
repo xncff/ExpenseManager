@@ -5,11 +5,11 @@ namespace ExpenseManager.BusinessLayer.Services;
 
 public class WalletService
 {
-    private IWalletRepo _repo;
+    private readonly IWalletRepo _repo;
     
     public WalletService(IWalletRepo repo)
     {
-        _repo = repo;
+        _repo = repo ?? throw new ArgumentNullException(nameof(repo));;
     }
 
     public Wallet Create(string name, Currency currency)
@@ -22,7 +22,7 @@ public class WalletService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 
@@ -35,7 +35,7 @@ public class WalletService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
     
@@ -51,7 +51,7 @@ public class WalletService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 
@@ -64,7 +64,7 @@ public class WalletService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 }

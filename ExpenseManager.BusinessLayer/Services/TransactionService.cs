@@ -5,11 +5,11 @@ namespace ExpenseManager.BusinessLayer.Services;
 
 public class TransactionService
 {
-    private ITransactionRepo _repo;
+    private readonly ITransactionRepo _repo;
 
     public TransactionService(ITransactionRepo repo)
     {
-        _repo = repo;
+        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
     public Transaction Create(Guid walletId, int amount, ExpenseType expenseType, string description)
@@ -22,7 +22,7 @@ public class TransactionService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 
@@ -35,7 +35,7 @@ public class TransactionService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 
@@ -48,7 +48,7 @@ public class TransactionService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 
@@ -66,7 +66,7 @@ public class TransactionService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
     
@@ -79,7 +79,7 @@ public class TransactionService
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw e;
+            throw;
         }
     }
 }
