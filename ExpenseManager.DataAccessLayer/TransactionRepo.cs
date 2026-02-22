@@ -3,7 +3,7 @@ using ExpenseManager.BusinessLayer.Models;
 
 namespace ExpenseManager.DataAccessLayer;
 
-internal class TransactionRepo : ITransactionRepo
+public class TransactionRepo : ITransactionRepo
 {
     public Transaction Create(Transaction transaction)
     {

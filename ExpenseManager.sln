@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.BusinessLaye
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.DataAccessLayer", "ExpenseManager.DataAccessLayer\ExpenseManager.DataAccessLayer.csproj", "{8ACA0CAD-864B-4CF6-AB07-CA9F46B54B95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.ConsoleApp", "ExpenseManager.ConsoleApp\ExpenseManager.ConsoleApp.csproj", "{C0CB6DF5-616E-47D0-9E9D-09A37074F733}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{8ACA0CAD-864B-4CF6-AB07-CA9F46B54B95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ACA0CAD-864B-4CF6-AB07-CA9F46B54B95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ACA0CAD-864B-4CF6-AB07-CA9F46B54B95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0CB6DF5-616E-47D0-9E9D-09A37074F733}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0CB6DF5-616E-47D0-9E9D-09A37074F733}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0CB6DF5-616E-47D0-9E9D-09A37074F733}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0CB6DF5-616E-47D0-9E9D-09A37074F733}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

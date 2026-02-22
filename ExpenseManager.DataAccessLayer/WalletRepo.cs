@@ -3,7 +3,7 @@ using ExpenseManager.BusinessLayer.Models;
 
 namespace ExpenseManager.DataAccessLayer;
 
-internal class WalletRepo : IWalletRepo
+public class WalletRepo : IWalletRepo
 {
     public Wallet Create(Wallet wallet)
     {
