@@ -1,5 +1,5 @@
 ## Expense Manager
-***
+
 Tracks wallets (accounts) and their transactions.
 
 Implemented as three-layer architecture with an anemic domain model.
