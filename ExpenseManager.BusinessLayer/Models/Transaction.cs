@@ -9,6 +9,10 @@ public enum ExpenseType
     DigitalGoods,
     Transport,
     Charity,
+    Bills,
+    Entertainment,
+    Restaurants,
+    Withdrawals,
 }
 
 public class Transaction
