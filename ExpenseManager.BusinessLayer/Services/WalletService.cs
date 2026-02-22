@@ -30,7 +30,7 @@ public class WalletService
     {
         try
         {
-            return  _repo.GetByGuid(guid);
+            return _repo.GetByGuid(guid);
         }
         catch (Exception e)
         {

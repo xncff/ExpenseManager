@@ -30,7 +30,7 @@ public class TransactionService
     {
         try
         {
-            return  _repo.GetByGuid(guid);
+            return _repo.GetByGuid(guid);
         }
         catch (Exception e)
         {
@@ -64,7 +64,9 @@ public class TransactionService
             throw;
         }
     }
-
+    
+    // I don't think Transaction needs update (or even delete),
+    // might delete later (and change setters to private)
     public Transaction Update(Guid guid, int amount, ExpenseType expenseType, string description, DateTime date)
     {
         try

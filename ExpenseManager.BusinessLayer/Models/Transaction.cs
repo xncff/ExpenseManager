@@ -67,6 +67,7 @@ public class Transaction
     //     get { return Amount > 0; }
     // }
     
+    // for when retrieving an object from a storage
     public Transaction(Guid guid, Guid walletGuid, decimal amount, ExpenseType expenseType, string description, DateTime date)
     {
         Guid = guid;
@@ -76,7 +77,8 @@ public class Transaction
         Description = description;
         Date = date;
     }
-
+    
+    // for when creating an object in a service
     public Transaction(Guid walletGuid, decimal amount, ExpenseType expenseType, string description)
     {
         Guid = Guid.NewGuid();

@@ -32,6 +32,7 @@ public class Wallet
         set { _currency = value; }
     }
     
+    // for when retrieving an object from a storage
     public Wallet(Guid guid, string name, Currency currency)
     {
         Guid = guid;
@@ -39,6 +40,7 @@ public class Wallet
         Currency = currency;
     }
     
+    // for when creating an object in a service
     public Wallet(string name, Currency currency)
     {
         Guid = Guid.NewGuid();
