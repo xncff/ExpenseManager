@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ExpenseManager.BusinessLayer\ExpenseManager.BusinessLayer.csproj" />
+    </ItemGroup>
+
 </Project>

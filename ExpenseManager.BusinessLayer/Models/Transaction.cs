@@ -13,6 +13,7 @@ public enum ExpenseType
     Entertainment,
     Restaurants,
     Withdrawals,
+    Others,
 }
 
 public class Transaction
