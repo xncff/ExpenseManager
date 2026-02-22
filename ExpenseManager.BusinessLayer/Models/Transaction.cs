@@ -79,6 +79,6 @@ public class Transaction
         Amount = amount;
         ExpenseType = expenseType;
         Description = description;
-        Date = DateTime.Now;
+        Date = DateTime.UtcNow;
     }
 }
