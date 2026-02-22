@@ -45,4 +45,9 @@ public class Wallet
         Name = name;
         Currency = currency;
     }
+
+    public override string ToString()
+    {
+        return $"{Name}, {Currency}";
+    }
 }

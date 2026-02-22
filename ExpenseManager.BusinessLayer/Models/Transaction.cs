@@ -86,4 +86,9 @@ public class Transaction
         Description = description;
         Date = DateTime.UtcNow;
     }
+
+    public override string ToString()
+    {
+        return $"{Amount} at {Date}: {Description}";
+    }
 }
