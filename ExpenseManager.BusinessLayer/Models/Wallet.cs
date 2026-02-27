@@ -41,11 +41,8 @@ public class Wallet
     }
     
     // for when creating an object in a service
-    public Wallet(string name, Currency currency)
+    public Wallet(string name, Currency currency) : this(Guid.NewGuid(), name, currency)
     {
-        Guid = Guid.NewGuid();
-        Name = name;
-        Currency = currency;
     }
 
     public override string ToString()

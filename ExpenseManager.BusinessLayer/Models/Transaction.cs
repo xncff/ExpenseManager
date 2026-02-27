@@ -79,14 +79,9 @@ public class Transaction
     }
     
     // for when creating an object in a service
-    public Transaction(Guid walletGuid, decimal amount, ExpenseType expenseType, string description)
+    public Transaction(Guid walletGuid, decimal amount, ExpenseType expenseType, string description) : 
+        this(Guid.NewGuid(), walletGuid, amount, expenseType, description, DateTime.UtcNow)
     {
-        Guid = Guid.NewGuid();
-        WalletGuid = walletGuid;
-        Amount = amount;
-        ExpenseType = expenseType;
-        Description = description;
-        Date = DateTime.UtcNow;
     }
 
     public override string ToString()
