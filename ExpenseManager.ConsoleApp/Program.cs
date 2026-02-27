@@ -1,4 +1,5 @@
-﻿using ExpenseManager.BusinessLayer.Models;
+﻿using System.Text;
+using ExpenseManager.BusinessLayer.Models;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.DataAccessLayer;
 
@@ -8,6 +9,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.OutputEncoding = Encoding.UTF8;
+        
         TransactionRepo transactionRepo = new TransactionRepo();
         WalletRepo walletRepo = new WalletRepo();
 
@@ -115,7 +118,6 @@ class Program
         Console.WriteLine($"Amount: {transaction.Amount} {wallet.Currency}"); 
         Console.WriteLine($"Category: {transaction.ExpenseType}");
         Console.WriteLine($"Description: {transaction.Description}");
-        Console.WriteLine($"Wallet (ID): {transaction.WalletGuid}");
         
         Console.WriteLine("\nPress any key to return to the transaction list...");
         Console.ReadKey();
