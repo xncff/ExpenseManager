@@ -1,6 +1,5 @@
 ﻿using System.Text;
 using ExpenseManager.BusinessLayer.Dtos;
-using ExpenseManager.BusinessLayer.Models;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.DataAccessLayer;
 

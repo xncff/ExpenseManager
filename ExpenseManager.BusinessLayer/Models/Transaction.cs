@@ -28,13 +28,13 @@ public class Transaction
     public Guid Guid
     {
         get { return _guid; }
-        private  set { _guid = value; }
+        set { _guid = value; }
     }
 
     public Guid WalletGuid
     {
         get { return _walletGuid; }
-        private set { _walletGuid = value; }
+        set { _walletGuid = value; }
     }
 
     public decimal Amount
@@ -60,12 +60,6 @@ public class Transaction
         get { return _date; }
         set { _date = value; }
     }
-    
-    // if false, ignore ExpenseType
-    // public bool IsExpense
-    // {
-    //     get { return Amount > 0; }
-    // }
     
     // for when retrieving an object from a storage
     public Transaction(Guid guid, Guid walletGuid, decimal amount, TransactionCategory category, string description, DateTime date)

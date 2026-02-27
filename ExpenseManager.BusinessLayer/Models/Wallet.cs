@@ -7,7 +7,6 @@ public enum Currency
     EUR,
 }
 
-// for now I don't see any usage in making setters public
 public class Wallet
 {
     private Guid _guid;
@@ -17,7 +16,7 @@ public class Wallet
     public Guid Guid
     {
         get { return _guid; }
-        private set { _guid = value; }
+        set { _guid = value; }
     }
 
     public string Name
