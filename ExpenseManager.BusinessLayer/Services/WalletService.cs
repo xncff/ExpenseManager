@@ -1,5 +1,8 @@
+using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Interfaces;
+using ExpenseManager.BusinessLayer.Mappings;
 using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.BusinessLayer.Mappings;
 
 namespace ExpenseManager.BusinessLayer.Services;
 
@@ -12,12 +15,12 @@ public class WalletService
         _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
-    public Wallet Create(string name, Currency currency)
+    public WalletResponse Create(CreateWalletRequest request)
     {
         try
         {
-            Wallet toCreate = new Wallet(name, currency);
-            return _repo.Create(toCreate);
+            Wallet toCreate = new Wallet(request.Name, request.Currency);
+            return _repo.Create(toCreate).ToDto();
         }
         catch (Exception e)
         {
@@ -26,11 +29,11 @@ public class WalletService
         }
     }
 
-    public Wallet GetByGuid(Guid guid)
+    public WalletResponse GetByGuid(GetWalletRequest request)
     {
         try
         {
-            return _repo.GetByGuid(guid);
+            return _repo.GetByGuid(request.Guid).ToDto();
         }
         catch (Exception e)
         {
@@ -39,11 +42,16 @@ public class WalletService
         }
     }
 
-    public IEnumerable<Wallet> GetAll()
+    public IEnumerable<WalletResponse> GetAll()
     {
         try
         {
-            return _repo.GetAll();
+            List<WalletResponse> result = new List<WalletResponse>();
+            foreach (Wallet wallet in _repo.GetAll())
+            {
+                result.Add(wallet.ToDto());
+            }
+            return result;
         }
         catch (Exception e)
         {
@@ -52,14 +60,14 @@ public class WalletService
         }
     }
     
-    public Wallet Update(Guid guid, string name, Currency currency)
+    public WalletResponse Update(UpdateWalletRequest request)
     {
         try
         {
-            Wallet toUpdate = _repo.GetByGuid(guid);
-            toUpdate.Name = name;
-            toUpdate.Currency = currency;
-            return _repo.Update(toUpdate);
+            Wallet toUpdate = _repo.GetByGuid(request.Guid);
+            toUpdate.Name = request.Name;
+            toUpdate.Currency = request.Currency;
+            return _repo.Update(toUpdate).ToDto();
         }
         catch (Exception e)
         {
@@ -68,11 +76,11 @@ public class WalletService
         }
     }
 
-    public void Delete(Guid guid)
+    public void Delete(DeleteWalletRequest request)
     {
         try
         {
-            _repo.Delete(guid);
+            _repo.Delete(request.Guid);
         }
         catch (Exception e)
         {

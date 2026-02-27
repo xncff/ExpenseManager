@@ -44,9 +44,4 @@ public class Wallet
     public Wallet(string name, Currency currency) : this(Guid.NewGuid(), name, currency)
     {
     }
-
-    public override string ToString()
-    {
-        return $"{Name}, {Currency}";
-    }
 }

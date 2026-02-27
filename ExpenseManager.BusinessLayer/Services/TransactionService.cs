@@ -1,5 +1,7 @@
+using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Models;
 using ExpenseManager.BusinessLayer.Interfaces;
+using ExpenseManager.BusinessLayer.Mappings;
 
 namespace ExpenseManager.BusinessLayer.Services;
 
@@ -12,12 +14,12 @@ public class TransactionService
         _repo = repo ?? throw new ArgumentNullException(nameof(repo));
     }
 
-    public Transaction Create(Guid walletId, int amount, TransCategory category, string description)
+    public TransactionResponse Create(CreateTransactionRequest request)
     {
         try
         {
-            Transaction toCreate = new Transaction(walletId, amount, category, description);
-            return _repo.Create(toCreate);
+            Transaction toCreate = new Transaction(request.WalletGuid, request.Amount, request.Category, request.Description);
+            return _repo.Create(toCreate).ToDto();
         }
         catch (Exception e)
         {
@@ -26,11 +28,11 @@ public class TransactionService
         }
     }
 
-    public Transaction GetByGuid(Guid guid)
+    public TransactionResponse GetByGuid(GetTransactionRequest request)
     {
         try
         {
-            return _repo.GetByGuid(guid);
+            return _repo.GetByGuid(request.Guid).ToDto();
         }
         catch (Exception e)
         {
@@ -39,11 +41,16 @@ public class TransactionService
         }
     }
 
-    public IEnumerable<Transaction> GetAllByWalletGuid(Guid walletGuid)
+    public IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionByWalletRequest request)
     {
         try
         {
-            return _repo.GetAllByWalletGuid(walletGuid);
+            List<TransactionResponse> result = new List<TransactionResponse>();
+            foreach (Transaction transaction in _repo.GetAllByWallet(request.WalletGuid))
+            {
+                result.Add(transaction.ToDto());
+            }
+            return result;
         }
         catch (Exception e)
         {
@@ -52,11 +59,16 @@ public class TransactionService
         }
     }
 
-    public IEnumerable<Transaction> GetAll()
+    public IEnumerable<TransactionResponse> GetAll()
     {
         try
         {
-            return _repo.GetAll();
+            List<TransactionResponse> result = new List<TransactionResponse>();
+            foreach (Transaction transaction in _repo.GetAll())
+            {
+                result.Add(transaction.ToDto());
+            }
+            return result;
         }
         catch (Exception e)
         {
@@ -67,16 +79,16 @@ public class TransactionService
     
     // I don't think Transaction needs update (or even delete),
     // might delete later (and change setters to private)
-    public Transaction Update(Guid guid, int amount, TransCategory category, string description, DateTime date)
+    public TransactionResponse Update(UpdateTransactionRequest request)
     {
         try
         {
-            Transaction toUpdate = _repo.GetByGuid(guid);
-            toUpdate.Amount = amount;
-            toUpdate.Category = category;
-            toUpdate.Description = description;
-            toUpdate.Date = date;
-            return _repo.Update(toUpdate);
+            Transaction toUpdate = _repo.GetByGuid(request.Guid);
+            toUpdate.Amount = request.Amount;
+            toUpdate.Category = request.Category;
+            toUpdate.Description =  request.Description;
+            toUpdate.Date = request.Date;
+            return _repo.Update(toUpdate).ToDto();
         }
         catch (Exception e)
         {
@@ -85,11 +97,11 @@ public class TransactionService
         }
     }
     
-    public void Delete(Guid guid)
+    public void Delete(DeleteTransactionRequest request)
     {
         try
         {
-            _repo.Delete(guid);
+            _repo.Delete(request.Guid);
         }
         catch (Exception e)
         {

@@ -6,7 +6,7 @@ public interface ITransactionRepo
 {
     public Transaction Create(Transaction transaction);
     public Transaction GetByGuid(Guid guid);
-    public IEnumerable<Transaction> GetAllByWalletGuid(Guid walletGuid);
+    public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid);
     public  IEnumerable<Transaction> GetAll();
     public Transaction Update(Transaction transaction);
     public void Delete(Guid guid);

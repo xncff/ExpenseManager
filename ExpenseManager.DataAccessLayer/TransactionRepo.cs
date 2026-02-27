@@ -28,7 +28,7 @@ public class TransactionRepo : ITransactionRepo
         return result;
     }
 
-    public IEnumerable<Transaction> GetAllByWalletGuid(Guid walletGuid)
+    public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid)
     {
         List<Transaction> result = new List<Transaction>();
         foreach (Transaction t in InMemoryStorage.Transactions)

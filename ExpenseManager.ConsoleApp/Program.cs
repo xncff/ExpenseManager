@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Models;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.DataAccessLayer;
@@ -28,7 +29,7 @@ class Program
             Console.Clear();
             Console.WriteLine("=== Wallets ===");
             
-            List<Wallet> wallets = walletService.GetAll().ToList();
+            List<WalletResponse> wallets = walletService.GetAll().ToList();
 
             if (wallets.Count == 0)
             {
@@ -54,7 +55,7 @@ class Program
             int walletIndex;
             if (int.TryParse(input, out walletIndex) && walletIndex > 0 && walletIndex <= wallets.Count)
             {
-                Wallet selectedWallet = wallets[walletIndex - 1];
+                WalletResponse selectedWallet = wallets[walletIndex - 1];
                 ShowWalletDetails(selectedWallet, transactionService);
             }
             else
@@ -64,7 +65,7 @@ class Program
         }
     }
 
-    static void ShowWalletDetails(Wallet wallet, TransactionService transactionService)
+    static void ShowWalletDetails(WalletResponse wallet, TransactionService transactionService)
     {
         int transNumToShow;
         while (true)
@@ -93,8 +94,10 @@ class Program
             
             Console.WriteLine(wallet.ToString());
             Console.WriteLine("------------------------------------------------");
-
-            List<Transaction> transactions = transactionService.GetAllByWalletGuid(wallet.Guid).ToList();
+            
+            GetTransactionByWalletRequest request = new GetTransactionByWalletRequest();
+            request.WalletGuid = wallet.Guid;
+            List<TransactionResponse> transactions = transactionService.GetAllByWallet(request).ToList();
             
             decimal total = 0;
             if (transactions.Count == 0)
@@ -130,7 +133,7 @@ class Program
                 transactionIndex <= transactions.Count && 
                 transactionIndex <= transNumToShow)
             {
-                Transaction selectedTransaction = transactions[transactionIndex - 1];
+                TransactionResponse selectedTransaction = transactions[transactionIndex - 1];
                 ShowTransactionDetails(selectedTransaction, wallet); 
             }
             else
@@ -140,7 +143,7 @@ class Program
         }
     }
     
-    static void ShowTransactionDetails(Transaction transaction, Wallet wallet) 
+    static void ShowTransactionDetails(TransactionResponse transaction, WalletResponse wallet) 
     {
         Console.Clear();
         Console.WriteLine("=== Transaction details ===");

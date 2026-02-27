@@ -83,9 +83,4 @@ public class Transaction
         this(Guid.NewGuid(), walletGuid, amount, category, description, DateTime.UtcNow)
     {
     }
-
-    public override string ToString()
-    {
-        return $"{Amount} at {Date}: {Description}";
-    }
 }
