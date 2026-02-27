@@ -1,6 +1,6 @@
 namespace ExpenseManager.BusinessLayer.Models;
 
-public enum TransCategory
+public enum TransactionCategory
 {
     MedicalServices,
     Mobile,
@@ -21,7 +21,7 @@ public class Transaction
     private Guid _guid;
     private Guid _walletGuid;
     private decimal _amount;
-    private TransCategory _category;
+    private TransactionCategory _category;
     private string _description;
     private DateTime _date;
 
@@ -43,7 +43,7 @@ public class Transaction
         set { _amount = value; }
     }
 
-    public TransCategory Category
+    public TransactionCategory Category
     {
         get { return _category; }
         set { _category = value; }
@@ -68,7 +68,7 @@ public class Transaction
     // }
     
     // for when retrieving an object from a storage
-    public Transaction(Guid guid, Guid walletGuid, decimal amount, TransCategory category, string description, DateTime date)
+    public Transaction(Guid guid, Guid walletGuid, decimal amount, TransactionCategory category, string description, DateTime date)
     {
         Guid = guid;
         WalletGuid = walletGuid;
@@ -79,7 +79,7 @@ public class Transaction
     }
     
     // for when creating an object in a service
-    public Transaction(Guid walletGuid, decimal amount, TransCategory category, string description) : 
+    public Transaction(Guid walletGuid, decimal amount, TransactionCategory category, string description) : 
         this(Guid.NewGuid(), walletGuid, amount, category, description, DateTime.UtcNow)
     {
     }

@@ -35,19 +35,19 @@ internal static class InMemoryStorage
         _wallets.Add(savingsWallet);
         _wallets.Add(investWallet);
         
-        _transactions.Add(new Transaction(mainWallet.Guid, -500, TransCategory.Groceries, "Продукти в Сільпо"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -85, TransCategory.Restaurants, "Кава"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -500, TransCategory.Bills, "Оплата електроенергії"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -100, TransCategory.Bills, "Оплата інтернету"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -400, TransCategory.DigitalGoods, "Підписка Netflix"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -250, TransCategory.Transport, "Таксі Uklon"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -600, TransCategory.MedicalServices, "Аптека Доброго Дня"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -400, TransCategory.Entertainment, "Квитки в кіно"));
-        _transactions.Add(new Transaction(mainWallet.Guid, 20000, TransCategory.Transfers, "Зарплатня"));
-        _transactions.Add(new Transaction(mainWallet.Guid, -250, TransCategory.Mobile, "Поповнення тарифу"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -500, TransactionCategory.Groceries, "Продукти в Сільпо"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -85, TransactionCategory.Restaurants, "Кава"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -500, TransactionCategory.Bills, "Оплата електроенергії"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -100, TransactionCategory.Bills, "Оплата інтернету"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -400, TransactionCategory.DigitalGoods, "Підписка Netflix"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -250, TransactionCategory.Transport, "Таксі Uklon"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -600, TransactionCategory.MedicalServices, "Аптека Доброго Дня"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -400, TransactionCategory.Entertainment, "Квитки в кіно"));
+        _transactions.Add(new Transaction(mainWallet.Guid, 20000, TransactionCategory.Transfers, "Зарплатня"));
+        _transactions.Add(new Transaction(mainWallet.Guid, -250, TransactionCategory.Mobile, "Поповнення тарифу"));
         
-        _transactions.Add(new Transaction(savingsWallet.Guid, 10000, TransCategory.Transfers, ""));
-        _transactions.Add(new Transaction(savingsWallet.Guid, -12000, TransCategory.Transfers, "Оренда квартири"));
-        _transactions.Add(new Transaction(savingsWallet.Guid, -6000, TransCategory.MedicalServices, "Стоматолог"));
+        _transactions.Add(new Transaction(savingsWallet.Guid, 10000, TransactionCategory.Transfers, ""));
+        _transactions.Add(new Transaction(savingsWallet.Guid, -12000, TransactionCategory.Transfers, "Оренда квартири"));
+        _transactions.Add(new Transaction(savingsWallet.Guid, -6000, TransactionCategory.MedicalServices, "Стоматолог"));
     }
 }

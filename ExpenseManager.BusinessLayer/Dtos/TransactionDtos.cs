@@ -6,7 +6,7 @@ public class CreateTransactionRequest
 {
     public Guid WalletGuid { get; set; }
     public decimal Amount { get; set; }
-    public TransCategory Category { get; set; }
+    public TransactionCategory Category { get; set; }
     public string Description { get; set; }
 }
 
@@ -24,7 +24,7 @@ public class UpdateTransactionRequest
 {
     public Guid Guid { get; set; }
     public decimal Amount { get; set; }
-    public TransCategory Category { get; set; }
+    public TransactionCategory Category { get; set; }
     public string Description { get; set; }
     public DateTime Date { get; set; }
 }
@@ -39,7 +39,7 @@ public class TransactionResponse
     public Guid Guid { get; set; }
     public Guid WalletGuid { get; set; }
     public decimal Amount { get; set; }
-    public TransCategory Category { get; set; }
+    public TransactionCategory Category { get; set; }
     public string Description { get; set; }
     public DateTime Date { get; set; }
     
