@@ -7,7 +7,7 @@ namespace ExpenseManager.ConsoleApp;
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
         Console.OutputEncoding = Encoding.UTF8;
         
@@ -16,7 +16,12 @@ class Program
 
         TransactionService transactionService = new TransactionService(transactionRepo);
         WalletService walletService = new WalletService(walletRepo);
+        
+        MainLoop(walletService, transactionService);
+    }
 
+    static void MainLoop(WalletService walletService,  TransactionService transactionService)
+    {
         bool exitApp = false;
         while (!exitApp)
         {
@@ -54,14 +59,32 @@ class Program
             }
             else
             {
-                Console.WriteLine("Invalid input. Press any key to continue...");
-                Console.ReadKey();
+                ShowInvalidInputMessage();
             }
         }
     }
 
     static void ShowWalletDetails(Wallet wallet, TransactionService transactionService)
     {
+        int transNumToShow;
+        while (true)
+        {
+            Console.Clear();
+            Console.WriteLine("\nEnter a number of transactions to show or '0' to go back:");
+            string input = Console.ReadLine();
+
+            if (input == "0")
+            {
+                return;
+            }
+            
+            if (int.TryParse(input, out transNumToShow) && transNumToShow > 0)
+            {
+                break;
+            }
+            ShowInvalidInputMessage();
+        }
+        
         bool goBack = false;
         while (!goBack)
         {
@@ -72,7 +95,8 @@ class Program
             Console.WriteLine("------------------------------------------------");
 
             List<Transaction> transactions = transactionService.GetAllByWalletGuid(wallet.Guid).ToList();
-
+            
+            decimal total = 0;
             if (transactions.Count == 0)
             {
                 Console.WriteLine("No transactions found for this wallet.");
@@ -82,9 +106,14 @@ class Program
                 Console.WriteLine("=== Transactions ===");
                 for (int i = 0; i < transactions.Count; ++i)
                 {
-                    Console.WriteLine($"{i + 1}. {transactions[i]}");
+                    if (i < transNumToShow)
+                    {
+                        Console.WriteLine($"{i + 1}. {transactions[i]}");
+                    }
+                    total += transactions[i].Amount;
                 }
             }
+            Console.WriteLine($"\nTotal expenses and incomes: {total} {wallet.Currency}");
 
             Console.WriteLine("\nEnter the transaction number for full information or '0' to go back:");
             string input = Console.ReadLine();
@@ -96,15 +125,17 @@ class Program
             }
             
             int transactionIndex;
-            if (int.TryParse(input, out transactionIndex) && transactionIndex > 0 && transactionIndex <= transactions.Count)
+            if (int.TryParse(input, out transactionIndex) && 
+                transactionIndex > 0 && 
+                transactionIndex <= transactions.Count && 
+                transactionIndex <= transNumToShow)
             {
                 Transaction selectedTransaction = transactions[transactionIndex - 1];
                 ShowTransactionDetails(selectedTransaction, wallet); 
             }
             else
             {
-                Console.WriteLine("Invalid input. Press any key to continue...");
-                Console.ReadKey();
+                ShowInvalidInputMessage();
             }
         }
     }
@@ -115,11 +146,18 @@ class Program
         Console.WriteLine("=== Transaction details ===");
         
         Console.WriteLine($"ID: {transaction.Guid}");
-        Console.WriteLine($"Amount: {transaction.Amount} {wallet.Currency}"); 
-        Console.WriteLine($"Category: {transaction.ExpenseType}");
+        string action = transaction.Amount >= 0 ? "received" : "spent";
+        Console.WriteLine($"Amount {action}: {Math.Abs(transaction.Amount)} {wallet.Currency}"); 
+        Console.WriteLine($"Category: {transaction.Category}");
         Console.WriteLine($"Description: {transaction.Description}");
         
         Console.WriteLine("\nPress any key to return to the transaction list...");
+        Console.ReadKey();
+    }
+    
+    static void ShowInvalidInputMessage()
+    {
+        Console.WriteLine("Invalid input. Press any key to continue...");
         Console.ReadKey();
     }
 }
