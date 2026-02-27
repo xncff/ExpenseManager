@@ -67,7 +67,7 @@ class Program
 
     static void ShowWalletDetails(WalletResponse wallet, TransactionService transactionService)
     {
-        int transNumToShow;
+        int transactionsNumToShow;
         while (true)
         {
             Console.Clear();
@@ -79,7 +79,7 @@ class Program
                 return;
             }
             
-            if (int.TryParse(input, out transNumToShow) && transNumToShow > 0)
+            if (int.TryParse(input, out transactionsNumToShow) && transactionsNumToShow > 0)
             {
                 break;
             }
@@ -109,7 +109,7 @@ class Program
                 Console.WriteLine("=== Transactions ===");
                 for (int i = 0; i < transactions.Count; ++i)
                 {
-                    if (i < transNumToShow)
+                    if (i < transactionsNumToShow)
                     {
                         Console.WriteLine($"{i + 1}. {transactions[i]}");
                     }
@@ -131,7 +131,7 @@ class Program
             if (int.TryParse(input, out transactionIndex) && 
                 transactionIndex > 0 && 
                 transactionIndex <= transactions.Count && 
-                transactionIndex <= transNumToShow)
+                transactionIndex <= transactionsNumToShow)
             {
                 TransactionResponse selectedTransaction = transactions[transactionIndex - 1];
                 ShowTransactionDetails(selectedTransaction, wallet); 
