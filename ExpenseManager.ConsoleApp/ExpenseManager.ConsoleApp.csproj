@@ -12,4 +12,8 @@
       <ProjectReference Include="..\ExpenseManager.DataAccessLayer\ExpenseManager.DataAccessLayer.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+    </ItemGroup>
+
 </Project>

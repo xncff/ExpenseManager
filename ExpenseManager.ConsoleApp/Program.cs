@@ -1,5 +1,8 @@
 ﻿using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+
 using ExpenseManager.BusinessLayer.Dtos;
+using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.DataAccessLayer;
 
@@ -10,13 +13,20 @@ class Program
     static void Main()
     {
         Console.OutputEncoding = Encoding.UTF8;
-        
-        TransactionRepo transactionRepo = new TransactionRepo();
-        WalletRepo walletRepo = new WalletRepo();
 
-        TransactionService transactionService = new TransactionService(transactionRepo);
-        WalletService walletService = new WalletService(walletRepo);
-        
+        ServiceCollection services = new ServiceCollection();
+
+        services.AddSingleton<InMemoryStorage>();
+        services.AddTransient<ITransactionRepo, TransactionRepo>();
+        services.AddTransient<IWalletRepo, WalletRepo>();
+        services.AddTransient<TransactionService>();
+        services.AddTransient<WalletService>();
+
+        ServiceProvider provider = services.BuildServiceProvider();
+
+        TransactionService transactionService = provider.GetRequiredService<TransactionService>();
+        WalletService walletService = provider.GetRequiredService<WalletService>();
+
         MainLoop(walletService, transactionService);
     }
 
