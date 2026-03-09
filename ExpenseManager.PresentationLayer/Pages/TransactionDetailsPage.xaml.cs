@@ -9,8 +9,8 @@ using ExpenseManager.BusinessLayer.Services;
 
 namespace ExpenseManager.PresentationLayer.Pages;
 
-[QueryProperty(nameof(CurrentTransaction), "transactionGuid")]
-[QueryProperty(nameof(CurrentWallet), "walletGuid")]
+[QueryProperty(nameof(CurrentTransactionGuid), "transactionGuid")]
+[QueryProperty(nameof(CurrentWalletGuid), "walletGuid")]
 public partial class TransactionDetailsPage : ContentPage
 {
     private readonly ITransactionService _transactionService;
@@ -26,7 +26,7 @@ public partial class TransactionDetailsPage : ContentPage
         _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));
     }
 
-    public string CurrentTransaction
+    public string CurrentTransactionGuid
     {
         set
         {
@@ -38,7 +38,7 @@ public partial class TransactionDetailsPage : ContentPage
         }
     }
 
-    public string CurrentWallet
+    public string CurrentWalletGuid
     {
         set
         {
@@ -50,15 +50,17 @@ public partial class TransactionDetailsPage : ContentPage
         }
     }
 
+    public TransactionResponse CurrentTransaction
+    {
+        get { return _transaction; }
+    }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
         
+        BindingContext = _transaction;
         AmountLabel.Text = $"{_transaction.Amount} {_wallet.Currency}";
         AmountLabel.TextColor = (_transaction.Amount >= 0) ? Colors.Green : Colors.Red;
-
-        CategoryLabel.Text = _transaction.Category.ToString();
-        DescriptionLabel.Text = _transaction.DescriptionForUI;
-        GuidLabel.Text = _transaction.Guid.ToString();
     }
 }

@@ -12,17 +12,17 @@
 
         <VerticalStackLayout Spacing="8">
             <Label Text="Category" TextColor="Gray" FontSize="13" />
-            <Label x:Name="CategoryLabel" FontSize="16" />
+            <Label Text="{Binding Category, Converter={StaticResource EnumToDisplayName}}" FontSize="16" />
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="8">
             <Label Text="Description" TextColor="Gray" FontSize="13" />
-            <Label x:Name="DescriptionLabel" FontSize="16" />
+            <Label Text="{Binding DescriptionForUI}" FontSize="16" />
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="8">
             <Label Text="ID" TextColor="Gray" FontSize="13" />
-            <Label x:Name="GuidLabel" FontSize="13" TextColor="Gray" />
+            <Label Text="{Binding Guid}" FontSize="13" TextColor="Gray" />
         </VerticalStackLayout>
 
     </VerticalStackLayout>

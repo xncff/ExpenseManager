@@ -1,11 +1,15 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ExpenseManager.BusinessLayer.Models;
 
 public enum TransactionCategory
 {
+    [Display(Name = "Medical services")]
     MedicalServices,
     Mobile,
     Groceries,
     Transfers,
+    [Display(Name = "Digital goods")]
     DigitalGoods,
     Transport,
     Charity,
