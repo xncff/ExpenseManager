@@ -47,4 +47,12 @@ public class TransactionResponse
     {
         return $"{Amount} at {Date}: {Description}";
     }
+
+    public string DescriptionForUI
+    {
+        get
+        {
+            return Description.IsWhiteSpace() ? "-" : Description;
+        }
+    }
 }
