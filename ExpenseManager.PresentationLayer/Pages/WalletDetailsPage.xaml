@@ -4,16 +4,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ExpenseManager.PresentationLayer.Pages.WalletDetailsPage"
              Title="Wallet Details">
-    <VerticalStackLayout>
-        
+    <Grid RowDefinitions="Auto, *">
         <VerticalStackLayout Padding="16" Spacing="4" BackgroundColor="#f0f0f0">
             <Label x:Name="WalletNameLabel" FontSize="20" FontAttributes="Bold" />
             <Label x:Name="WalletTotalLabel" FontSize="15" TextColor="Gray" />
         </VerticalStackLayout>
-
+        
         <CollectionView x:Name="TransactionsCollection"
                         SelectionMode="Single"
-                        SelectionChanged="OnTransactionSelected">
+                        SelectionChanged="OnTransactionSelected"
+                        Grid.Row="1">
 
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -27,6 +27,5 @@
             </CollectionView.ItemTemplate>
 
         </CollectionView>
-
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>
