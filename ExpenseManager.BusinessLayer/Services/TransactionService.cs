@@ -5,7 +5,7 @@ using ExpenseManager.BusinessLayer.Mappings;
 
 namespace ExpenseManager.BusinessLayer.Services;
 
-public class TransactionService
+public class TransactionService : ITransactionService
 {
     private readonly ITransactionRepo _repo;
 

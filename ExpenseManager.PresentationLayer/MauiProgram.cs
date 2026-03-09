@@ -19,10 +19,12 @@ public static class MauiProgram
         builder.Services.AddTransient<ITransactionRepo, TransactionRepo>();
         builder.Services.AddTransient<IWalletRepo, WalletRepo>();
         
-        builder.Services.AddTransient<TransactionService>();
-        builder.Services.AddTransient<WalletService>();
+        builder.Services.AddTransient<ITransactionService, TransactionService>();
+        builder.Services.AddTransient<IWalletService, WalletService>();
         
         builder.Services.AddTransient<WalletsPage>();
+        builder.Services.AddTransient<WalletDetailsPage>();
+        builder.Services.AddTransient<TransactionDetailsPage>();
 
         return builder.Build();
     }

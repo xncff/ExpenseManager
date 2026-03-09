@@ -5,14 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.BusinessLayer.Dtos;
+using ExpenseManager.BusinessLayer.Interfaces;
 
 namespace ExpenseManager.PresentationLayer.Pages;
 
 public partial class WalletsPage : ContentPage
 {
-    private readonly WalletService _walletService;
+    private readonly IWalletService _walletService;
 
-    public WalletsPage(WalletService walletService)
+    public WalletsPage(IWalletService walletService)
     {
         InitializeComponent();
         _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));

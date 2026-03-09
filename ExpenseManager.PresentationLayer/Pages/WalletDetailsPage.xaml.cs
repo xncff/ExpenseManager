@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExpenseManager.BusinessLayer.Dtos;
+using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Services;
 
 namespace ExpenseManager.PresentationLayer.Pages;
@@ -11,13 +12,13 @@ namespace ExpenseManager.PresentationLayer.Pages;
 [QueryProperty(nameof(CurrentWallet), "walletGuid")]
 public partial class WalletDetailsPage : ContentPage
 {
-    private readonly WalletService _walletService;
-    private readonly TransactionService _transactionService;
+    private readonly IWalletService _walletService;
+    private readonly ITransactionService _transactionService;
 
     private WalletResponse _wallet;
     private List<TransactionResponse> _transactions;
 
-    public WalletDetailsPage(WalletService walletService, TransactionService transactionService)
+    public WalletDetailsPage(IWalletService walletService, ITransactionService transactionService)
     {
         InitializeComponent();
         _walletService = walletService ?? throw new ArgumentNullException(nameof(walletService));

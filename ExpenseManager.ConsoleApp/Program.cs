@@ -17,20 +17,22 @@ class Program
         ServiceCollection services = new ServiceCollection();
 
         services.AddSingleton<InMemoryStorage>();
+        
         services.AddTransient<ITransactionRepo, TransactionRepo>();
         services.AddTransient<IWalletRepo, WalletRepo>();
-        services.AddTransient<TransactionService>();
-        services.AddTransient<WalletService>();
+        
+        services.AddTransient<ITransactionService, TransactionService>();
+        services.AddTransient<IWalletService, WalletService>();
 
         ServiceProvider provider = services.BuildServiceProvider();
 
-        TransactionService transactionService = provider.GetRequiredService<TransactionService>();
-        WalletService walletService = provider.GetRequiredService<WalletService>();
+        ITransactionService transactionService = provider.GetRequiredService<ITransactionService>();
+        IWalletService walletService = provider.GetRequiredService<IWalletService>();
 
         MainLoop(walletService, transactionService);
     }
 
-    static void MainLoop(WalletService walletService,  TransactionService transactionService)
+    static void MainLoop(IWalletService walletService, ITransactionService transactionService)
     {
         bool exitApp = false;
         while (!exitApp)
@@ -74,7 +76,7 @@ class Program
         }
     }
 
-    static void ShowWalletDetails(WalletResponse wallet, TransactionService transactionService)
+    static void ShowWalletDetails(WalletResponse wallet, ITransactionService transactionService)
     {
         int transactionsNumToShow;
         while (true)

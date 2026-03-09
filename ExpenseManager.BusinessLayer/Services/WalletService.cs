@@ -6,7 +6,7 @@ using ExpenseManager.BusinessLayer.Mappings;
 
 namespace ExpenseManager.BusinessLayer.Services;
 
-public class WalletService
+public class WalletService : IWalletService
 {
     private readonly IWalletRepo _repo;
     
