@@ -5,6 +5,13 @@ namespace ExpenseManager.DataAccessLayer;
 
 public class TransactionRepo : ITransactionRepo
 {
+    private readonly InMemoryStorage _storage;
+    
+    public TransactionRepo(InMemoryStorage storage)
+    {
+        _storage = storage;
+    }
+    
     public Transaction Create(Transaction transaction)
     {
         throw new NotImplementedException("Storage is currently read-only mock.");
@@ -12,38 +19,26 @@ public class TransactionRepo : ITransactionRepo
 
     public Transaction GetByGuid(Guid guid)
     {
-        Transaction result = null;
-        foreach (Transaction t in InMemoryStorage.Transactions)
+        foreach (Transaction t in _storage.Transactions)
         {
-            if (t.Guid == guid)
-            {
-                result = t;
-                break;
-            }
+            if (t.Guid == guid) return t;
         }
-        if (result is null)
-        {
-            throw new KeyNotFoundException($"Transaction {guid} not found.");
-        }
-        return result;
+        throw new KeyNotFoundException($"Transaction {guid} not found.");
     }
 
     public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid)
     {
         List<Transaction> result = new List<Transaction>();
-        foreach (Transaction t in InMemoryStorage.Transactions)
+        foreach (Transaction t in _storage.Transactions)
         {
-            if (t.WalletGuid == walletGuid)
-            {
-                result.Add(t);
-            }
+            if (t.WalletGuid == walletGuid) result.Add(t);
         }
         return result;
     }
 
     public IEnumerable<Transaction> GetAll()
     {
-        return InMemoryStorage.Transactions;
+        return _storage.Transactions.ToList();
     }
 
     public Transaction Update(Transaction transaction)

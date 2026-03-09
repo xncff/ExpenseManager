@@ -2,34 +2,27 @@ using ExpenseManager.BusinessLayer.Models;
 
 namespace ExpenseManager.DataAccessLayer;
 
-internal static class InMemoryStorage
+public class InMemoryStorage
 {
-    private static readonly List<Wallet> _wallets;
-    private static readonly List<Transaction> _transactions;
+    private readonly List<Wallet> _wallets;
+    private readonly List<Transaction> _transactions;
 
-    internal static List<Wallet> Wallets
-    {
-        get { return _wallets.ToList(); }
-    }
+    public List<Wallet> Wallets => _wallets;
+    public List<Transaction> Transactions => _transactions;
     
-    internal static List<Transaction> Transactions
-    {
-        get { return _transactions.ToList(); }
-    }
-    
-    static InMemoryStorage()
+    public InMemoryStorage()
     {
         _wallets = new List<Wallet>();
         _transactions = new List<Transaction>();
 
-        FillDB();
+        FillDb();
     }
 
-    private static void FillDB()
+    private void FillDb()
     {
-        var mainWallet = new Wallet("Зарплатня", Currency.UAH);
-        var savingsWallet = new Wallet("Скарбничка", Currency.UAH);
-        var investWallet = new Wallet("Інвестиції", Currency.USD);
+        Wallet mainWallet = new Wallet("Зарплатня", Currency.UAH);
+        Wallet savingsWallet = new Wallet("Скарбничка", Currency.UAH);
+        Wallet investWallet = new Wallet("Інвестиції", Currency.USD);
 
         _wallets.Add(mainWallet);
         _wallets.Add(savingsWallet);
