@@ -159,11 +159,11 @@ class Program
         Console.Clear();
         Console.WriteLine("=== Transaction details ===");
         
-        Console.WriteLine($"ID: {transaction.Guid}");
         string action = transaction.Amount >= 0 ? "received" : "spent";
         Console.WriteLine($"Amount {action}: {Math.Abs(transaction.Amount)} {wallet.Currency}"); 
         Console.WriteLine($"Category: {transaction.Category}");
         Console.WriteLine($"Description: {transaction.Description}");
+        Console.WriteLine($"Date: {transaction.Date}");
         
         Console.WriteLine("\nPress any key to return to the transaction list...");
         Console.ReadKey();

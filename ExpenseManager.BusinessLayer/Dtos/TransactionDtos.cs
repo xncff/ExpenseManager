@@ -45,7 +45,7 @@ public class TransactionResponse
     
     public override string ToString()
     {
-        return $"{Amount} at {Date}: {Description}";
+        return $"{Amount} at {Date}";
     }
 
     public string DescriptionForUI

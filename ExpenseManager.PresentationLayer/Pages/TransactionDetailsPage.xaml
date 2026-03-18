@@ -19,6 +19,11 @@
             <Label Text="Description" TextColor="Gray" FontSize="13" />
             <Label Text="{Binding DescriptionForUI}" FontSize="16" />
         </VerticalStackLayout>
+        
+        <VerticalStackLayout Spacing="8">
+            <Label Text="Date" TextColor="Gray" FontSize="13" />
+            <Label Text="{Binding Date}" FontSize="16" />
+        </VerticalStackLayout>
 
     </VerticalStackLayout>
 </ContentPage>
