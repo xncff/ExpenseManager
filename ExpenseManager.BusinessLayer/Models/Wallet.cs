@@ -9,27 +9,9 @@ public enum Currency
 
 public class Wallet
 {
-    private Guid _guid;
-    private string _name;
-    private Currency _currency;
-    
-    public Guid Guid
-    {
-        get { return _guid; }
-        set { _guid = value; }
-    }
-
-    public string Name
-    {
-        get { return _name; }
-        set { _name = value; }
-    }
-
-    public Currency Currency
-    {
-        get { return _currency; }
-        set { _currency = value; }
-    }
+    public Guid Guid { get; }
+    public string Name { get; set; }
+    public Currency Currency { get; set; }
     
     // for when retrieving an object from a storage
     public Wallet(Guid guid, string name, Currency currency)

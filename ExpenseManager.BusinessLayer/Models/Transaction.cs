@@ -22,48 +22,12 @@ public enum TransactionCategory
 
 public class Transaction
 {
-    private Guid _guid;
-    private Guid _walletGuid;
-    private decimal _amount;
-    private TransactionCategory _category;
-    private string _description;
-    private DateTime _date;
-
-    public Guid Guid
-    {
-        get { return _guid; }
-        set { _guid = value; }
-    }
-
-    public Guid WalletGuid
-    {
-        get { return _walletGuid; }
-        set { _walletGuid = value; }
-    }
-
-    public decimal Amount
-    {
-        get { return _amount; }
-        set { _amount = value; }
-    }
-
-    public TransactionCategory Category
-    {
-        get { return _category; }
-        set { _category = value; }
-    }
-
-    public string Description
-    {
-        get { return _description; }
-        set { _description = value; }
-    }
-
-    public DateTime Date
-    {
-        get { return _date; }
-        set { _date = value; }
-    }
+    public Guid Guid { get; }
+    public Guid WalletGuid { get; }
+    public decimal Amount { get; set; }
+    public TransactionCategory Category { get; set; }
+    public string Description { get; set; }
+    public DateTime Date { get; }
     
     // for when retrieving an object from a storage
     public Transaction(Guid guid, Guid walletGuid, decimal amount, TransactionCategory category, string description, DateTime date)

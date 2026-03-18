@@ -77,8 +77,6 @@ public class TransactionService : ITransactionService
         }
     }
     
-    // I don't think Transaction needs update (or even delete),
-    // might delete later (and change setters to private)
     public TransactionResponse Update(UpdateTransactionRequest request)
     {
         try
@@ -87,7 +85,6 @@ public class TransactionService : ITransactionService
             toUpdate.Amount = request.Amount;
             toUpdate.Category = request.Category;
             toUpdate.Description =  request.Description;
-            toUpdate.Date = request.Date;
             return _repo.Update(toUpdate).ToDto();
         }
         catch (Exception e)
