@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
 using ExpenseManager.BusinessLayer.Dtos;
@@ -18,11 +18,11 @@ class Program
 
         services.AddSingleton<InMemoryStorage>();
         
-        services.AddTransient<ITransactionRepo, TransactionRepo>();
-        services.AddTransient<IWalletRepo, WalletRepo>();
+        services.AddSingleton<ITransactionRepo, TransactionRepo>();
+        services.AddSingleton<IWalletRepo, WalletRepo>();
         
-        services.AddTransient<ITransactionService, TransactionService>();
-        services.AddTransient<IWalletService, WalletService>();
+        services.AddSingleton<ITransactionService, TransactionService>();
+        services.AddSingleton<IWalletService, WalletService>();
 
         ServiceProvider provider = services.BuildServiceProvider();
 

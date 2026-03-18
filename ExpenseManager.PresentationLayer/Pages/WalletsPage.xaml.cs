@@ -36,6 +36,6 @@ public partial class WalletsPage : ContentPage
         
         WalletsCollection.SelectedItem = null;
         
-        Shell.Current.GoToAsync($"WalletDetailsPage?walletGuid={wallet.Guid}");
+        Shell.Current.GoToAsync($"{nameof(WalletDetailsPage)}?walletGuid={wallet.Guid}");
     }
 }

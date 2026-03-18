@@ -20,10 +20,5 @@
             <Label Text="{Binding DescriptionForUI}" FontSize="16" />
         </VerticalStackLayout>
 
-        <VerticalStackLayout Spacing="8">
-            <Label Text="ID" TextColor="Gray" FontSize="13" />
-            <Label Text="{Binding Guid}" FontSize="13" TextColor="Gray" />
-        </VerticalStackLayout>
-
     </VerticalStackLayout>
 </ContentPage>

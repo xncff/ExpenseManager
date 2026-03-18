@@ -71,6 +71,6 @@ public partial class WalletDetailsPage : ContentPage
 
         TransactionsCollection.SelectedItem = null;
 
-        Shell.Current.GoToAsync($"TransactionDetailsPage?transactionGuid={transaction.Guid}&walletGuid={_wallet.Guid}");
+        Shell.Current.GoToAsync($"{nameof(TransactionDetailsPage)}?transactionGuid={transaction.Guid}&walletGuid={_wallet.Guid}");
     }
 }

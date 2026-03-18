@@ -1,4 +1,4 @@
-﻿using ExpenseManager.DataAccessLayer;
+using ExpenseManager.DataAccessLayer;
 using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.PresentationLayer.Pages;
@@ -16,11 +16,11 @@ public static class MauiProgram
         
         builder.Services.AddSingleton<InMemoryStorage>();
         
-        builder.Services.AddTransient<ITransactionRepo, TransactionRepo>();
-        builder.Services.AddTransient<IWalletRepo, WalletRepo>();
+        builder.Services.AddSingleton<ITransactionRepo, TransactionRepo>();
+        builder.Services.AddSingleton<IWalletRepo, WalletRepo>();
         
-        builder.Services.AddTransient<ITransactionService, TransactionService>();
-        builder.Services.AddTransient<IWalletService, WalletService>();
+        builder.Services.AddSingleton<ITransactionService, TransactionService>();
+        builder.Services.AddSingleton<IWalletService, WalletService>();
         
         builder.Services.AddTransient<WalletsPage>();
         builder.Services.AddTransient<WalletDetailsPage>();
