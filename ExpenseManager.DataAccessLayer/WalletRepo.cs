@@ -19,16 +19,19 @@ public class WalletRepo : IWalletRepo
 
     public Wallet GetByGuid(Guid guid)
     {
-        foreach (Wallet w in _storage.Wallets)
+        var record = _storage.Wallets.FirstOrDefault(w => w.Guid == guid);
+        if (record is null)
         {
-            if (w.Guid == guid) return w;
+            throw new KeyNotFoundException($"Wallet {guid} not found.");
         }
-        throw new KeyNotFoundException($"Wallet {guid} not found.");
+        return new Wallet(record.Guid, record.Name, record.Currency);
     }
 
     public IEnumerable<Wallet> GetAll()
     {
-        return _storage.Wallets.ToList();
+        return _storage.Wallets
+            .Select(r => new Wallet(r.Guid, r.Name, r.Currency))
+            .ToList();
     }
 
     public Wallet Update(Wallet wallet)

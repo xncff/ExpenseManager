@@ -19,26 +19,27 @@ public class TransactionRepo : ITransactionRepo
 
     public Transaction GetByGuid(Guid guid)
     {
-        foreach (Transaction t in _storage.Transactions)
+        var record = _storage.Transactions.FirstOrDefault(t => t.Guid == guid);
+        if (record is null)
         {
-            if (t.Guid == guid) return t;
+            throw new KeyNotFoundException($"Transaction {guid} not found.");
         }
-        throw new KeyNotFoundException($"Transaction {guid} not found.");
+        return new Transaction(record.Guid, record.WalletGuid, record.Amount, record.Category, record.Description, record.Date);
     }
 
     public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid)
     {
-        List<Transaction> result = new List<Transaction>();
-        foreach (Transaction t in _storage.Transactions)
-        {
-            if (t.WalletGuid == walletGuid) result.Add(t);
-        }
-        return result;
+        return _storage.Transactions
+            .Where(t => t.WalletGuid == walletGuid)
+            .Select(r => new Transaction(r.Guid, r.WalletGuid, r.Amount, r.Category, r.Description, r.Date))
+            .ToList();
     }
 
     public IEnumerable<Transaction> GetAll()
     {
-        return _storage.Transactions.ToList();
+        return _storage.Transactions
+            .Select(r => new Transaction(r.Guid, r.WalletGuid, r.Amount, r.Category, r.Description, r.Date))
+            .ToList();
     }
 
     public Transaction Update(Transaction transaction)
