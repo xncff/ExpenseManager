@@ -7,8 +7,8 @@ public class InMemoryStorage
     private readonly List<Wallet> _wallets;
     private readonly List<Transaction> _transactions;
 
-    public List<Wallet> Wallets => _wallets;
-    public List<Transaction> Transactions => _transactions;
+    public IReadOnlyList<Wallet> Wallets => _wallets;
+    public IReadOnlyList<Transaction> Transactions => _transactions;
     
     public InMemoryStorage()
     {
