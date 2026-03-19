@@ -55,7 +55,7 @@ class Program
             }
 
             Console.WriteLine("\nEnter the wallet number for details or '0' to exit:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input == "0")
             {
@@ -83,7 +83,7 @@ class Program
         {
             Console.Clear();
             Console.WriteLine("\nEnter a number of transactions to show or '0' to go back:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input == "0")
             {
@@ -129,7 +129,7 @@ class Program
             Console.WriteLine($"\nTotal expenses and incomes: {total} {wallet.Currency}");
 
             Console.WriteLine("\nEnter the transaction number for full information or '0' to go back:");
-            string input = Console.ReadLine();
+            string? input = Console.ReadLine();
 
             if (input == "0")
             {
