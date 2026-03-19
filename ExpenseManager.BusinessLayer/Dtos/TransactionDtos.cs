@@ -104,4 +104,12 @@ public class TransactionResponse
             return Description.IsWhiteSpace() ? "-" : Description;
         }
     }
+
+    public bool IsExpense
+    {
+        get
+        {
+            return Amount < 0;
+        }
+    }
 }

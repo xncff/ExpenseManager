@@ -55,6 +55,6 @@ public partial class TransactionDetailsPage : ContentPage
         
         BindingContext = _transaction;
         AmountLabel.Text = $"{_transaction.Amount} {_wallet.Currency}";
-        AmountLabel.TextColor = (_transaction.Amount >= 0) ? Colors.Green : Colors.Red;
+        AmountLabel.TextColor = _transaction.IsExpense ? Colors.Red : Colors.Green;
     }
 }
