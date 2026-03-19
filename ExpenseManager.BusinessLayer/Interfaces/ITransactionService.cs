@@ -6,7 +6,7 @@ namespace ExpenseManager.BusinessLayer.Interfaces
     {
         TransactionResponse Create(CreateTransactionRequest request);
         TransactionResponse GetByGuid(GetTransactionRequest request);
-        IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionByWalletRequest request);
+        IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionsByWalletRequest request);
         IEnumerable<TransactionResponse> GetAll();
         TransactionResponse Update(UpdateTransactionRequest request);
         void Delete(DeleteTransactionRequest request);

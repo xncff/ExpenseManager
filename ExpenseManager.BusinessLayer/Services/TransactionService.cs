@@ -41,7 +41,7 @@ public class TransactionService : ITransactionService
         }
     }
 
-    public IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionByWalletRequest request)
+    public IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionsByWalletRequest request)
     {
         try
         {

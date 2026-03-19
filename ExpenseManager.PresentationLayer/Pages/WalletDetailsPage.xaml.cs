@@ -34,7 +34,7 @@ public partial class WalletDetailsPage : ContentPage
             GetWalletRequest walletRequest = new GetWalletRequest(guid);
             _wallet = _walletService.GetByGuid(walletRequest);
 
-            GetTransactionByWalletRequest txRequest = new GetTransactionByWalletRequest(guid);
+            GetTransactionsByWalletRequest txRequest = new GetTransactionsByWalletRequest(guid);
             _transactions = _transactionService.GetAllByWallet(txRequest).ToList();
         }
     }
@@ -44,14 +44,9 @@ public partial class WalletDetailsPage : ContentPage
         base.OnAppearing();
         
         WalletNameLabel.Text = $"{_wallet.Name}";
-
-        decimal total = 0;
-        foreach (TransactionResponse t in _transactions)
-        {
-            total += t.Amount;
-        }
-
-        WalletTotalLabel.Text = $"Total expenses and incomes: {total} {_wallet.Currency}";
+        
+        WalletTotalLabel.Text = $"Total expenses and incomes: " +
+                                $"{_walletService.GetTotal(new GetWalletTotalRequest(_wallet.Guid))} {_wallet.Currency}";
 
         TransactionsCollection.ItemsSource = _transactions;
     }

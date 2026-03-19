@@ -67,7 +67,7 @@ class Program
             if (int.TryParse(input, out walletIndex) && walletIndex > 0 && walletIndex <= wallets.Count)
             {
                 WalletResponse selectedWallet = wallets[walletIndex - 1];
-                ShowWalletDetails(selectedWallet, transactionService);
+                ShowWalletDetails(selectedWallet, transactionService, walletService);
             }
             else
             {
@@ -76,7 +76,7 @@ class Program
         }
     }
 
-    static void ShowWalletDetails(WalletResponse wallet, ITransactionService transactionService)
+    static void ShowWalletDetails(WalletResponse wallet, ITransactionService transactionService, IWalletService walletService)
     {
         int transactionsNumToShow;
         while (true)
@@ -106,10 +106,9 @@ class Program
             Console.WriteLine(wallet.ToString());
             Console.WriteLine("------------------------------------------------");
             
-            GetTransactionByWalletRequest request = new GetTransactionByWalletRequest(wallet.Guid);
-            List<TransactionResponse> transactions = transactionService.GetAllByWallet(request).ToList();
+            List<TransactionResponse> transactions = transactionService.GetAllByWallet(
+                new GetTransactionsByWalletRequest(wallet.Guid)).ToList();
             
-            decimal total = 0;
             if (transactions.Count == 0)
             {
                 Console.WriteLine("No transactions found for this wallet.");
@@ -117,16 +116,13 @@ class Program
             else
             {
                 Console.WriteLine("=== Transactions ===");
-                for (int i = 0; i < transactions.Count; ++i)
+                for (int i = 0; i < transactions.Count && i < transactionsNumToShow; ++i)
                 {
-                    if (i < transactionsNumToShow)
-                    {
-                        Console.WriteLine($"{i + 1}. {transactions[i]}");
-                    }
-                    total += transactions[i].Amount;
+                    Console.WriteLine($"{i + 1}. {transactions[i]}");
                 }
             }
-            Console.WriteLine($"\nTotal expenses and incomes: {total} {wallet.Currency}");
+            Console.WriteLine($"\nTotal expenses and incomes: " +
+                              $"{walletService.GetTotal(new GetWalletTotalRequest(wallet.Guid))} {wallet.Currency}");
 
             Console.WriteLine("\nEnter the transaction number for full information or '0' to go back:");
             string? input = Console.ReadLine();

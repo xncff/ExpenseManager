@@ -58,6 +58,19 @@ public class WalletService : IWalletService
             throw;
         }
     }
+
+    public decimal GetTotal(GetWalletTotalRequest request)
+    {
+        try
+        {
+            return _repo.GetTotal(request.Guid);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
     
     public WalletResponse Update(UpdateWalletRequest request)
     {

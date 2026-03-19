@@ -8,6 +8,7 @@ namespace ExpenseManager.BusinessLayer.Interfaces
         WalletResponse Create(CreateWalletRequest request);
         WalletResponse GetByGuid(GetWalletRequest request);
         IEnumerable<WalletResponse> GetAll();
+        decimal GetTotal(GetWalletTotalRequest request);
         WalletResponse Update(UpdateWalletRequest request);
         void Delete(DeleteWalletRequest request);
     }

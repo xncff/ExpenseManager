@@ -4,10 +4,10 @@ namespace ExpenseManager.BusinessLayer.Interfaces;
 
 public interface ITransactionRepo
 {
-    public Transaction Create(Transaction transaction);
-    public Transaction GetByGuid(Guid guid);
-    public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid);
-    public  IEnumerable<Transaction> GetAll();
-    public Transaction Update(Transaction transaction);
-    public void Delete(Guid guid);
+    Transaction Create(Transaction transaction);
+    Transaction GetByGuid(Guid guid);
+    IEnumerable<Transaction> GetAllByWallet(Guid walletGuid);
+    IEnumerable<Transaction> GetAll();
+    Transaction Update(Transaction transaction);
+    void Delete(Guid guid);
 }

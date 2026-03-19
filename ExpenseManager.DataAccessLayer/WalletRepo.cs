@@ -27,6 +27,15 @@ public class WalletRepo : IWalletRepo
         return new Wallet(record.Guid, record.Name, record.Currency);
     }
 
+    public decimal GetTotal(Guid guid)
+    {
+        return _storage.Transactions
+            .Where(tx => tx.WalletGuid == guid)
+            .Select(tx => tx.Amount)
+            .DefaultIfEmpty(0)
+            .Sum();
+    }
+
     public IEnumerable<Wallet> GetAll()
     {
         return _storage.Wallets

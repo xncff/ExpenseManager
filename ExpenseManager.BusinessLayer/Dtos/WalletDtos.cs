@@ -24,6 +24,16 @@ public class GetWalletRequest
     }
 }
 
+public class GetWalletTotalRequest
+{
+    public Guid Guid { get; }
+    
+    public GetWalletTotalRequest(Guid guid)
+    {
+        Guid = guid;
+    }
+}
+
 public class UpdateWalletRequest
 {
     public Guid Guid { get; }

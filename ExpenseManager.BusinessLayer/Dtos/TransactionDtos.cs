@@ -28,11 +28,11 @@ public class GetTransactionRequest
     }
 }
 
-public class GetTransactionByWalletRequest
+public class GetTransactionsByWalletRequest
 {
     public Guid WalletGuid { get; }
 
-    public GetTransactionByWalletRequest(Guid walletGuid)
+    public GetTransactionsByWalletRequest(Guid walletGuid)
     {
         WalletGuid = walletGuid;
     }
