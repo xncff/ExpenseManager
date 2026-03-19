@@ -106,8 +106,7 @@ class Program
             Console.WriteLine(wallet.ToString());
             Console.WriteLine("------------------------------------------------");
             
-            GetTransactionByWalletRequest request = new GetTransactionByWalletRequest();
-            request.WalletGuid = wallet.Guid;
+            GetTransactionByWalletRequest request = new GetTransactionByWalletRequest(wallet.Guid);
             List<TransactionResponse> transactions = transactionService.GetAllByWallet(request).ToList();
             
             decimal total = 0;

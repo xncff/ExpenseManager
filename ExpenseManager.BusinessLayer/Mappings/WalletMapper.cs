@@ -7,11 +7,6 @@ public static class WalletMapper
 {
     public static WalletResponse ToDto(this Wallet wallet)
     {
-        return new WalletResponse
-        {
-            Guid = wallet.Guid,
-            Name = wallet.Name,
-            Currency = wallet.Currency
-        };
+        return new WalletResponse(wallet.Guid, wallet.Name, wallet.Currency);
     }
 }

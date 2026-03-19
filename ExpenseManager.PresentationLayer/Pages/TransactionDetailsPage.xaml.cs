@@ -30,10 +30,7 @@ public partial class TransactionDetailsPage : ContentPage
     {
         set
         {
-            GetTransactionRequest request = new GetTransactionRequest
-            {
-                Guid = Guid.Parse(value)
-            };
+            GetTransactionRequest request = new GetTransactionRequest(Guid.Parse(value));
             _transaction = _transactionService.GetByGuid(request);
         }
     }
@@ -42,10 +39,7 @@ public partial class TransactionDetailsPage : ContentPage
     {
         set
         {
-            GetWalletRequest request = new GetWalletRequest
-            {
-                Guid = Guid.Parse(value)
-            };
+            GetWalletRequest request = new GetWalletRequest(Guid.Parse(value));
             _wallet = _walletService.GetByGuid(request);
         }
     }

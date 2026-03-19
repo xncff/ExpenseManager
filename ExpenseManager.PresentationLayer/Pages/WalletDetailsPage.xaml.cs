@@ -31,16 +31,10 @@ public partial class WalletDetailsPage : ContentPage
         {
             Guid guid = Guid.Parse(value);
             
-            GetWalletRequest walletRequest = new GetWalletRequest
-            {
-                Guid = guid
-            };
+            GetWalletRequest walletRequest = new GetWalletRequest(guid);
             _wallet = _walletService.GetByGuid(walletRequest);
 
-            GetTransactionByWalletRequest txRequest = new GetTransactionByWalletRequest
-            {
-                WalletGuid = guid
-            };
+            GetTransactionByWalletRequest txRequest = new GetTransactionByWalletRequest(guid);
             _transactions = _transactionService.GetAllByWallet(txRequest).ToList();
         }
     }
