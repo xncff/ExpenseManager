@@ -2,6 +2,7 @@ using ExpenseManager.DataAccessLayer;
 using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Services;
 using ExpenseManager.PresentationLayer.Pages;
+using ExpenseManager.PresentationLayer.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace ExpenseManager.PresentationLayer;
@@ -25,6 +26,10 @@ public static class MauiProgram
         builder.Services.AddTransient<WalletsPage>();
         builder.Services.AddTransient<WalletDetailsPage>();
         builder.Services.AddTransient<TransactionDetailsPage>();
+
+        builder.Services.AddTransient<WalletsViewModel>();
+        builder.Services.AddTransient<WalletDetailsViewModel>();
+        builder.Services.AddTransient<TransactionDetailsViewModel>();
 
         return builder.Build();
     }

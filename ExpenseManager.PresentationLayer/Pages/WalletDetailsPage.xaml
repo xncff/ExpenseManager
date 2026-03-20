@@ -2,22 +2,25 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ExpenseManager.PresentationLayer.ViewModels"
+             xmlns:dtos="clr-namespace:ExpenseManager.BusinessLayer.Dtos;assembly=ExpenseManager.BusinessLayer"
              x:Class="ExpenseManager.PresentationLayer.Pages.WalletDetailsPage"
+             x:DataType="vm:WalletDetailsViewModel"
              Title="Wallet Details">
     
     <Grid RowDefinitions="Auto, *">
         <VerticalStackLayout Padding="16" Spacing="4" BackgroundColor="#f0f0f0">
-            <Label x:Name="WalletNameLabel" FontSize="20" FontAttributes="Bold" />
-            <Label x:Name="WalletTotalLabel" FontSize="15" TextColor="Gray" />
+            <Label Text="{Binding CurrentWallet.Name}" FontSize="20" FontAttributes="Bold" />
+            <Label Text="{Binding WalletTotalText}" FontSize="15" TextColor="Gray" />
         </VerticalStackLayout>
         
-        <CollectionView x:Name="TransactionsCollection"
+        <CollectionView ItemsSource="{Binding Transactions}"
                         SelectionMode="Single"
-                        SelectionChanged="OnTransactionSelected"
+                        SelectedItem="{Binding SelectedTransaction}"
                         Grid.Row="1">
-
+        
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="dtos:TransactionResponse">
                     <VerticalStackLayout Padding="16,10" Spacing="2">
                         <Label Text="{Binding Amount}" FontSize="15" FontAttributes="Bold" />
                         <Label Text="{Binding Category, Converter={StaticResource EnumToDisplayName}}" FontSize="13" TextColor="Gray" />
@@ -26,7 +29,7 @@
                     </VerticalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-
+        
         </CollectionView>
     </Grid>
 </ContentPage>

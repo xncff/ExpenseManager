@@ -2,15 +2,18 @@
 
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ExpenseManager.PresentationLayer.ViewModels"
+             xmlns:dtos="clr-namespace:ExpenseManager.BusinessLayer.Dtos;assembly=ExpenseManager.BusinessLayer"
              x:Class="ExpenseManager.PresentationLayer.Pages.WalletsPage"
+             x:DataType="vm:WalletsViewModel"
              Title="My Wallets">
-    <CollectionView x:Name="WalletsCollection"
+    <CollectionView ItemsSource="{Binding Wallets}"
                     Margin="12"
                     SelectionMode="Single"
-                    SelectionChanged="OnWalletSelected">
+                    SelectedItem="{Binding SelectedWallet}">
 
         <CollectionView.ItemTemplate>
-            <DataTemplate>
+            <DataTemplate x:DataType="dtos:WalletResponse">
                 <VerticalStackLayout Padding="12" Spacing="4">
                     <Label Text="{Binding Name}"
                            FontSize="18"
