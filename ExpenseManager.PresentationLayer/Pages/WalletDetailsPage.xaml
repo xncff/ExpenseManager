@@ -15,13 +15,19 @@
         </VerticalStackLayout>
         
         <CollectionView ItemsSource="{Binding Transactions}"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding SelectedTransaction}"
+                        SelectionMode="None"
                         Grid.Row="1">
         
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="dtos:TransactionResponse">
                     <VerticalStackLayout Padding="16,10" Spacing="2">
+                        
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletDetailsViewModel}}, Path=LoadTransactionCommand}"
+                                CommandParameter="{Binding Guid}" />
+                        </VerticalStackLayout.GestureRecognizers>
+                        
                         <Label Text="{Binding Amount}" FontSize="15" FontAttributes="Bold" />
                         <Label Text="{Binding Category, Converter={StaticResource EnumToDisplayName}}" FontSize="13" TextColor="Gray" />
                         <Label Text="{Binding DescriptionForUI}" FontSize="14" />

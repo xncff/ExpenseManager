@@ -9,12 +9,18 @@
              Title="My Wallets">
     <CollectionView ItemsSource="{Binding Wallets}"
                     Margin="12"
-                    SelectionMode="Single"
-                    SelectedItem="{Binding SelectedWallet}">
+                    SelectionMode="None">
 
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="dtos:WalletResponse">
                 <VerticalStackLayout Padding="12" Spacing="4">
+                    
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletsViewModel}}, Path=LoadWalletCommand}"
+                            CommandParameter="{Binding Guid}"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    
                     <Label Text="{Binding Name}"
                            FontSize="18"
                            FontAttributes="Bold" />
