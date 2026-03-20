@@ -4,19 +4,20 @@ using System.Runtime.CompilerServices;
 using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.PresentationLayer.Pages;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace ExpenseManager.PresentationLayer.ViewModels;
 
-public class WalletDetailsViewModel : IQueryAttributable, INotifyPropertyChanged
+public partial class WalletDetailsViewModel : ObservableObject, IQueryAttributable
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-    
     private readonly IWalletService _walletService;
     private readonly ITransactionService _transactionService;
 
     private WalletResponse _currentWallet;
+    [ObservableProperty]
     private ObservableCollection<TransactionResponse> _transactions;
     private TransactionResponse _selectedTransaction;
+    [ObservableProperty]
     private string _walletTotalText;
 
     public WalletDetailsViewModel(IWalletService walletService, ITransactionService transactionService)
@@ -44,18 +45,6 @@ public class WalletDetailsViewModel : IQueryAttributable, INotifyPropertyChanged
         }
     }
     
-    public string WalletTotalText
-    {
-        get => _walletTotalText;
-        set { _walletTotalText = value; OnPropertyChanged(); }
-    }
-    
-    public ObservableCollection<TransactionResponse> Transactions
-    {
-        get => _transactions;
-        set { _transactions = value; OnPropertyChanged(); }
-    }
-    
     public TransactionResponse SelectedTransaction
     {
         get => _selectedTransaction;
@@ -78,10 +67,5 @@ public class WalletDetailsViewModel : IQueryAttributable, INotifyPropertyChanged
     {
         Guid walletGuid = (Guid)query["WalletGuid"];
         CurrentWallet = _walletService.GetByGuid(new GetWalletRequest(walletGuid));
-    }
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
