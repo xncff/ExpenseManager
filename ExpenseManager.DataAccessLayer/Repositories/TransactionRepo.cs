@@ -1,7 +1,8 @@
-using ExpenseManager.BusinessLayer.Interfaces;
-using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.DataAccessLayer.Interfaces;
+using ExpenseManager.DataAccessLayer.Models;
+using ExpenseManager.DataAccessLayer.Storage;
 
-namespace ExpenseManager.DataAccessLayer;
+namespace ExpenseManager.DataAccessLayer.Repositories;
 
 public class TransactionRepo : ITransactionRepo
 {

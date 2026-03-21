@@ -4,7 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Services;
-using ExpenseManager.DataAccessLayer;
+using ExpenseManager.DataAccessLayer.Storage;
+using ExpenseManager.DataAccessLayer.Interfaces;
+using ExpenseManager.DataAccessLayer.Repositories;
 
 namespace ExpenseManager.ConsoleApp;
 

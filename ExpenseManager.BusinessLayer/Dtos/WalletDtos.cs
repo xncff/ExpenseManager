@@ -1,4 +1,4 @@
-using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.DataAccessLayer.Models;
 
 namespace ExpenseManager.BusinessLayer.Dtos;
 

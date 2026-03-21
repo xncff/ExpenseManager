@@ -1,7 +1,8 @@
 using ExpenseManager.BusinessLayer.Dtos;
 using ExpenseManager.BusinessLayer.Interfaces;
 using ExpenseManager.BusinessLayer.Mappings;
-using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.DataAccessLayer.Models;
+using ExpenseManager.DataAccessLayer.Interfaces;
 
 namespace ExpenseManager.BusinessLayer.Services;
 

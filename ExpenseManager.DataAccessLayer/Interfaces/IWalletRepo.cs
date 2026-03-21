@@ -1,6 +1,6 @@
-using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.DataAccessLayer.Models;
 
-namespace ExpenseManager.BusinessLayer.Interfaces;
+namespace ExpenseManager.DataAccessLayer.Interfaces;
 
 public interface IWalletRepo
 {

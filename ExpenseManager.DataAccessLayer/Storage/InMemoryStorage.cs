@@ -1,6 +1,6 @@
-using ExpenseManager.BusinessLayer.Models;
+using ExpenseManager.DataAccessLayer.Models;
 
-namespace ExpenseManager.DataAccessLayer;
+namespace ExpenseManager.DataAccessLayer.Storage;
 
 public class InMemoryStorage
 {

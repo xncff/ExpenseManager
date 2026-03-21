@@ -1,4 +1,4 @@
-namespace ExpenseManager.BusinessLayer.Models;
+namespace ExpenseManager.DataAccessLayer.Models;
 
 public enum Currency
 {

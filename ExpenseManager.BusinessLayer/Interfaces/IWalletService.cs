@@ -1,5 +1,4 @@
 using ExpenseManager.BusinessLayer.Dtos;
-using ExpenseManager.BusinessLayer.Models;
 
 namespace ExpenseManager.BusinessLayer.Interfaces
 {

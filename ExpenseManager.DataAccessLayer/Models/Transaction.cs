@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace ExpenseManager.BusinessLayer.Models;
+namespace ExpenseManager.DataAccessLayer.Models;
 
 public enum TransactionCategory
 {
