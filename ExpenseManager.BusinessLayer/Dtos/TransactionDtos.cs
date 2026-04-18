@@ -44,15 +44,13 @@ public class UpdateTransactionRequest
     public decimal Amount { get; }
     public TransactionCategory Category { get; }
     public string Description { get; }
-    public DateTime Date { get; }
 
-    public UpdateTransactionRequest(Guid guid, decimal amount, TransactionCategory category, string description, DateTime date)
+    public UpdateTransactionRequest(Guid guid, decimal amount, TransactionCategory category, string description)
     {
         Guid = guid;
         Amount = amount;
         Category = category;
         Description = description;
-        Date = date;
     }
 }
 
@@ -101,7 +99,7 @@ public class TransactionResponse
     {
         get
         {
-            return Description.IsWhiteSpace() ? "-" : Description;
+            return string.IsNullOrWhiteSpace(Description) ? "-" : Description;
         }
     }
 

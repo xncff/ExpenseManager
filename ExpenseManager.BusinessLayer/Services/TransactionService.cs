@@ -17,94 +17,36 @@ public class TransactionService : ITransactionService
 
     public TransactionResponse Create(CreateTransactionRequest request)
     {
-        try
-        {
-            Transaction toCreate = new Transaction(request.WalletGuid, request.Amount, request.Category, request.Description);
-            return _repo.Create(toCreate).ToDto();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        Transaction toCreate = new Transaction(request.WalletGuid, request.Amount, request.Category, request.Description);
+        return _repo.Create(toCreate).ToDto();
     }
 
     public TransactionResponse GetByGuid(GetTransactionRequest request)
     {
-        try
-        {
-            return _repo.GetByGuid(request.Guid).ToDto();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return _repo.GetByGuid(request.Guid).ToDto();
     }
 
     public IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionsByWalletRequest request)
     {
-        try
-        {
-            List<TransactionResponse> result = new List<TransactionResponse>();
-            foreach (Transaction transaction in _repo.GetAllByWallet(request.WalletGuid))
-            {
-                result.Add(transaction.ToDto());
-            }
-            return result;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return _repo.GetAllByWallet(request.WalletGuid).Select(t => t.ToDto()).ToList();
     }
 
     public IEnumerable<TransactionResponse> GetAll()
     {
-        try
-        {
-            List<TransactionResponse> result = new List<TransactionResponse>();
-            foreach (Transaction transaction in _repo.GetAll())
-            {
-                result.Add(transaction.ToDto());
-            }
-            return result;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        return _repo.GetAll().Select(t => t.ToDto()).ToList();
     }
-    
+
     public TransactionResponse Update(UpdateTransactionRequest request)
     {
-        try
-        {
-            Transaction toUpdate = _repo.GetByGuid(request.Guid);
-            toUpdate.Amount = request.Amount;
-            toUpdate.Category = request.Category;
-            toUpdate.Description =  request.Description;
-            return _repo.Update(toUpdate).ToDto();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        Transaction toUpdate = _repo.GetByGuid(request.Guid);
+        toUpdate.Amount = request.Amount;
+        toUpdate.Category = request.Category;
+        toUpdate.Description = request.Description;
+        return _repo.Update(toUpdate).ToDto();
     }
-    
+
     public void Delete(DeleteTransactionRequest request)
     {
-        try
-        {
-            _repo.Delete(request.Guid);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
+        _repo.Delete(request.Guid);
     }
 }

@@ -7,15 +7,16 @@ namespace ExpenseManager.DataAccessLayer.Repositories;
 public class WalletRepo : IWalletRepo
 {
     private readonly InMemoryStorage _storage;
-    
+
     public WalletRepo(InMemoryStorage storage)
     {
         _storage = storage;
     }
-    
+
     public Wallet Create(Wallet wallet)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        _storage.Wallets.Add(new InMemoryStorage.WalletRecord(wallet.Guid, wallet.Name, wallet.Currency));
+        return wallet;
     }
 
     public Wallet GetByGuid(Guid guid)
@@ -46,11 +47,32 @@ public class WalletRepo : IWalletRepo
 
     public Wallet Update(Wallet wallet)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        int index = FindIndex(wallet.Guid);
+        _storage.Wallets[index] = new InMemoryStorage.WalletRecord(wallet.Guid, wallet.Name, wallet.Currency);
+        return wallet;
     }
 
     public void Delete(Guid guid)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        int index = FindIndex(guid);
+        _storage.Wallets.RemoveAt(index);
+
+        var orphanTransactions = _storage.Transactions.Where(t => t.WalletGuid == guid).ToList();
+        foreach (var tx in orphanTransactions)
+        {
+            _storage.Transactions.Remove(tx);
+        }
+    }
+
+    private int FindIndex(Guid guid)
+    {
+        for (int i = 0; i < _storage.Wallets.Count; i++)
+        {
+            if (_storage.Wallets[i].Guid == guid)
+            {
+                return i;
+            }
+        }
+        throw new KeyNotFoundException($"Wallet {guid} not found.");
     }
 }

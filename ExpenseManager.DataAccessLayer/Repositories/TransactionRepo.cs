@@ -7,15 +7,23 @@ namespace ExpenseManager.DataAccessLayer.Repositories;
 public class TransactionRepo : ITransactionRepo
 {
     private readonly InMemoryStorage _storage;
-    
+
     public TransactionRepo(InMemoryStorage storage)
     {
         _storage = storage;
     }
-    
+
     public Transaction Create(Transaction transaction)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        _storage.Transactions.Add(new InMemoryStorage.TransactionRecord(
+            transaction.Guid,
+            transaction.WalletGuid,
+            transaction.Amount,
+            transaction.Category,
+            transaction.Description,
+            transaction.Date
+        ));
+        return transaction;
     }
 
     public Transaction GetByGuid(Guid guid)
@@ -45,11 +53,33 @@ public class TransactionRepo : ITransactionRepo
 
     public Transaction Update(Transaction transaction)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        int index = FindIndex(transaction.Guid);
+        _storage.Transactions[index] = new InMemoryStorage.TransactionRecord(
+            transaction.Guid,
+            transaction.WalletGuid,
+            transaction.Amount,
+            transaction.Category,
+            transaction.Description,
+            transaction.Date
+        );
+        return transaction;
     }
 
     public void Delete(Guid guid)
     {
-        throw new NotImplementedException("Storage is currently read-only mock.");
+        int index = FindIndex(guid);
+        _storage.Transactions.RemoveAt(index);
+    }
+
+    private int FindIndex(Guid guid)
+    {
+        for (int i = 0; i < _storage.Transactions.Count; i++)
+        {
+            if (_storage.Transactions[i].Guid == guid)
+            {
+                return i;
+            }
+        }
+        throw new KeyNotFoundException($"Transaction {guid} not found.");
     }
 }

@@ -17,8 +17,8 @@ public class InMemoryStorage
     private readonly List<WalletRecord> _wallets;
     private readonly List<TransactionRecord> _transactions;
 
-    public List<WalletRecord> Wallets => _wallets.ToList();
-    public List<TransactionRecord> Transactions => _transactions.ToList();
+    public IList<WalletRecord> Wallets => _wallets;
+    public IList<TransactionRecord> Transactions => _transactions;
     
     public InMemoryStorage()
     {
