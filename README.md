@@ -2,10 +2,9 @@
 
 Tracks wallets (accounts) and their transactions.
 
-Implemented as three-layer architecture with an anemic domain model.
+Implemented as a strict three-layer architecture:
 
 **Projects**:
-- ExpenseManager.BusinessLayer – business services, domain models, DTOs and interfaces.
-- ExpenseManager.DataAccessLayer – repositories and mock storage.
-- ExpenseManager.PresentationLayer – Replication of `ExpenseLayer.ConsoleApp` using MAUI.
-- ExpenseLayer.ConsoleApp - basic console app.
+- ExpenseManager.PresentationLayer – MAUI interface and app logic. Interacts only with Services.
+- ExpenseManager.BusinessLayer – services and DTOs. Interacts with Storage and transforms models.
+- ExpenseManager.DataAccessLayer – storage, repositories, and entity models.
