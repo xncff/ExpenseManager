@@ -7,7 +7,8 @@
              x:DataType="vm:TransactionDetailsViewModel"
              Title="Transaction Details">
 
-    <ScrollView>
+    <Grid>
+        <ScrollView IsEnabled="{Binding IsNotBusy}">
         <VerticalStackLayout Padding="20" Spacing="16">
 
             <VerticalStackLayout IsVisible="{Binding IsReadMode}" Spacing="16">
@@ -53,5 +54,11 @@
             </VerticalStackLayout>
 
         </VerticalStackLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+    </Grid>
 </ContentPage>

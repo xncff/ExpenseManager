@@ -87,14 +87,14 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         try
         {
-            WalletResponse wallet = _walletService.GetByGuid(new GetWalletRequest(_walletGuid));
+            WalletResponse wallet = await _walletService.GetByGuidAsync(new GetWalletRequest(_walletGuid));
             Name = wallet.Name;
             Currency = wallet.Currency;
 
-            decimal total = _walletService.GetTotal(new GetWalletTotalRequest(_walletGuid));
+            decimal total = await _walletService.GetTotalAsync(new GetWalletTotalRequest(_walletGuid));
             WalletTotalText = $"Total expenses and incomes: {total} {wallet.Currency}";
 
-            LoadTransactionsList();
+            await LoadTransactionsList();
         }
         catch (Exception ex)
         {
@@ -117,7 +117,7 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         try
         {
-            LoadTransactionsList();
+            await LoadTransactionsList();
         }
         catch (Exception ex)
         {
@@ -129,16 +129,15 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         }
     }
 
-    private void LoadTransactionsList()
+    private async Task LoadTransactionsList()
     {
-        IEnumerable<TransactionResponse> items = _transactionService.GetAllByWallet(
+        IEnumerable<TransactionResponse> items = await _transactionService.GetAllByWalletAsync(
             new GetTransactionsByWalletRequest(_walletGuid));
 
         if (!string.IsNullOrWhiteSpace(SearchText))
         {
             string query = SearchText.Trim();
-            items = items.Where(t => (t.Description ?? string.Empty)
-                .Contains(query, StringComparison.OrdinalIgnoreCase));
+            items = items.Where(t => t.Description.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
 
         items = SelectedSort switch
@@ -150,7 +149,7 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         };
 
         Transactions.Clear();
-        foreach (var tx in items)
+        foreach (TransactionResponse tx in items)
         {
             Transactions.Add(tx);
         }
@@ -173,13 +172,13 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         {
             if (IsNew)
             {
-                WalletResponse created = _walletService.Create(new CreateWalletRequest(Name.Trim(), Currency));
+                WalletResponse created = await _walletService.CreateAsync(new CreateWalletRequest(Name.Trim(), Currency));
                 _walletGuid = created.Guid;
                 IsNew = false;
             }
             else
             {
-                _walletService.Update(new UpdateWalletRequest(_walletGuid, Name.Trim(), Currency));
+                await _walletService.UpdateAsync(new UpdateWalletRequest(_walletGuid, Name.Trim(), Currency));
             }
 
             IsEditMode = false;
@@ -276,7 +275,7 @@ public partial class WalletDetailsViewModel : BaseViewModel, IQueryAttributable
         IsBusy = true;
         try
         {
-            _transactionService.Delete(new DeleteTransactionRequest(transactionGuid));
+            await _transactionService.DeleteAsync(new DeleteTransactionRequest(transactionGuid));
             await Refresh();
         }
         catch (Exception ex)

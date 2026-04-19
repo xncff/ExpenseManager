@@ -6,16 +6,30 @@ namespace ExpenseManager.DataAccessLayer.Repositories;
 
 public class TransactionRepo : ITransactionRepo
 {
-    private readonly InMemoryStorage _storage;
+    private readonly IStorage _storage;
 
-    public TransactionRepo(InMemoryStorage storage)
+    public TransactionRepo(IStorage storage)
     {
         _storage = storage;
     }
 
-    public Transaction Create(Transaction transaction)
+    public async Task<IEnumerable<Transaction>> GetAllByWalletAsync(Guid walletGuid)
     {
-        _storage.Transactions.Add(new InMemoryStorage.TransactionRecord(
+        IEnumerable<TransactionDbModel> records = await _storage.GetTransactionsByWalletAsync(walletGuid);
+        return records.Select(r => new Transaction(r.Guid, r.WalletGuid, r.Amount, r.Category, r.Description, r.Date)).ToList();
+    }
+
+    public async Task<Transaction?> GetByGuidAsync(Guid guid)
+    {
+        TransactionDbModel? record = await _storage.GetTransactionAsync(guid);
+        return record is null
+            ? null
+            : new Transaction(record.Guid, record.WalletGuid, record.Amount, record.Category, record.Description, record.Date);
+    }
+
+    public Task SaveAsync(Transaction transaction)
+    {
+        return _storage.SaveTransactionAsync(new TransactionDbModel(
             transaction.Guid,
             transaction.WalletGuid,
             transaction.Amount,
@@ -23,63 +37,10 @@ public class TransactionRepo : ITransactionRepo
             transaction.Description,
             transaction.Date
         ));
-        return transaction;
     }
 
-    public Transaction GetByGuid(Guid guid)
+    public Task DeleteAsync(Guid guid)
     {
-        var record = _storage.Transactions.FirstOrDefault(t => t.Guid == guid);
-        if (record is null)
-        {
-            throw new KeyNotFoundException($"Transaction {guid} not found.");
-        }
-        return new Transaction(record.Guid, record.WalletGuid, record.Amount, record.Category, record.Description, record.Date);
-    }
-
-    public IEnumerable<Transaction> GetAllByWallet(Guid walletGuid)
-    {
-        return _storage.Transactions
-            .Where(t => t.WalletGuid == walletGuid)
-            .Select(r => new Transaction(r.Guid, r.WalletGuid, r.Amount, r.Category, r.Description, r.Date))
-            .ToList();
-    }
-
-    public IEnumerable<Transaction> GetAll()
-    {
-        return _storage.Transactions
-            .Select(r => new Transaction(r.Guid, r.WalletGuid, r.Amount, r.Category, r.Description, r.Date))
-            .ToList();
-    }
-
-    public Transaction Update(Transaction transaction)
-    {
-        int index = FindIndex(transaction.Guid);
-        _storage.Transactions[index] = new InMemoryStorage.TransactionRecord(
-            transaction.Guid,
-            transaction.WalletGuid,
-            transaction.Amount,
-            transaction.Category,
-            transaction.Description,
-            transaction.Date
-        );
-        return transaction;
-    }
-
-    public void Delete(Guid guid)
-    {
-        int index = FindIndex(guid);
-        _storage.Transactions.RemoveAt(index);
-    }
-
-    private int FindIndex(Guid guid)
-    {
-        for (int i = 0; i < _storage.Transactions.Count; i++)
-        {
-            if (_storage.Transactions[i].Guid == guid)
-            {
-                return i;
-            }
-        }
-        throw new KeyNotFoundException($"Transaction {guid} not found.");
+        return _storage.DeleteTransactionAsync(guid);
     }
 }

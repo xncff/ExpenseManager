@@ -12,40 +12,46 @@ public class WalletService : IWalletService
 
     public WalletService(IWalletRepo repo)
     {
-        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+        _repo = repo;
     }
 
-    public WalletResponse Create(CreateWalletRequest request)
+    public async Task<WalletResponse> CreateAsync(CreateWalletRequest request)
     {
-        Wallet toCreate = new Wallet(request.Name, request.Currency);
-        return _repo.Create(toCreate).ToDto();
+        Wallet wallet = new Wallet(request.Name, request.Currency);
+        await _repo.SaveAsync(wallet);
+        return wallet.ToDto();
     }
 
-    public WalletResponse GetByGuid(GetWalletRequest request)
+    public async Task<WalletResponse> GetByGuidAsync(GetWalletRequest request)
     {
-        return _repo.GetByGuid(request.Guid).ToDto();
+        Wallet wallet = await _repo.GetByGuidAsync(request.Guid)
+            ?? throw new KeyNotFoundException($"Wallet {request.Guid} not found.");
+        return wallet.ToDto();
     }
 
-    public IEnumerable<WalletResponse> GetAll()
+    public async Task<IEnumerable<WalletResponse>> GetAllAsync()
     {
-        return _repo.GetAll().Select(w => w.ToDto()).ToList();
+        IEnumerable<Wallet> wallets = await _repo.GetAllAsync();
+        return wallets.Select(w => w.ToDto()).ToList();
     }
 
-    public decimal GetTotal(GetWalletTotalRequest request)
+    public Task<decimal> GetTotalAsync(GetWalletTotalRequest request)
     {
-        return _repo.GetTotal(request.Guid);
+        return _repo.GetTotalAsync(request.Guid);
     }
 
-    public WalletResponse Update(UpdateWalletRequest request)
+    public async Task<WalletResponse> UpdateAsync(UpdateWalletRequest request)
     {
-        Wallet toUpdate = _repo.GetByGuid(request.Guid);
-        toUpdate.Name = request.Name;
-        toUpdate.Currency = request.Currency;
-        return _repo.Update(toUpdate).ToDto();
+        Wallet wallet = await _repo.GetByGuidAsync(request.Guid)
+            ?? throw new KeyNotFoundException($"Wallet {request.Guid} not found.");
+        wallet.Name = request.Name;
+        wallet.Currency = request.Currency;
+        await _repo.SaveAsync(wallet);
+        return wallet.ToDto();
     }
 
-    public void Delete(DeleteWalletRequest request)
+    public Task DeleteAsync(DeleteWalletRequest request)
     {
-        _repo.Delete(request.Guid);
+        return _repo.DeleteAsync(request.Guid);
     }
 }

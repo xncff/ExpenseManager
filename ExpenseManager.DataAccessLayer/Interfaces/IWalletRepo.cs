@@ -4,10 +4,9 @@ namespace ExpenseManager.DataAccessLayer.Interfaces;
 
 public interface IWalletRepo
 {
-    Wallet Create(Wallet wallet);
-    Wallet GetByGuid(Guid guid);
-    IEnumerable<Wallet> GetAll();
-    decimal GetTotal(Guid guid);
-    Wallet Update(Wallet wallet);
-    void Delete(Guid guid);
+    Task<IEnumerable<Wallet>> GetAllAsync();
+    Task<Wallet?> GetByGuidAsync(Guid guid);
+    Task<decimal> GetTotalAsync(Guid guid);
+    Task SaveAsync(Wallet wallet);
+    Task DeleteAsync(Guid guid);
 }

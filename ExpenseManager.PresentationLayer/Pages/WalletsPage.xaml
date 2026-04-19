@@ -12,45 +12,52 @@
         <ToolbarItem Text="Add" Command="{Binding AddWalletCommand}" />
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto, Auto, *" Padding="12">
-        <SearchBar Grid.Row="0"
-                   Placeholder="Search by name..."
-                   Text="{Binding SearchText}"
-                   TextChanged="OnFilterChanged" />
+    <Grid>
+        <Grid RowDefinitions="Auto, Auto, *" Padding="12" IsEnabled="{Binding IsNotBusy}">
+            <SearchBar Grid.Row="0"
+                       Placeholder="Search by name..."
+                       Text="{Binding SearchText}"
+                       TextChanged="OnFilterChanged" />
 
-        <Picker Grid.Row="1"
-                Title="Sort by"
-                ItemsSource="{Binding SortOptions}"
-                SelectedItem="{Binding SelectedSort}"
-                SelectedIndexChanged="OnFilterChanged" />
+            <Picker Grid.Row="1"
+                    Title="Sort by"
+                    ItemsSource="{Binding SortOptions}"
+                    SelectedItem="{Binding SelectedSort}"
+                    SelectedIndexChanged="OnFilterChanged" />
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Wallets}"
-                        SelectionMode="None">
+            <CollectionView Grid.Row="2"
+                            ItemsSource="{Binding Wallets}"
+                            SelectionMode="None">
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="dtos:WalletResponse">
-                    <Grid ColumnDefinitions="*, Auto" Padding="12">
-                        <VerticalStackLayout Grid.Column="0" Spacing="4">
-                            <VerticalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletsViewModel}}, Path=LoadWalletCommand}"
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="dtos:WalletResponse">
+                        <Grid ColumnDefinitions="*, Auto" Padding="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletsViewModel}}, Path=LoadWalletCommand}"
+                                        CommandParameter="{Binding Guid}" />
+                                </VerticalStackLayout.GestureRecognizers>
+
+                                <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                                <Label Text="{Binding Currency}" FontSize="14" TextColor="Gray" />
+                            </VerticalStackLayout>
+
+                            <Button Grid.Column="1"
+                                    Text="Delete"
+                                    VerticalOptions="Center"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletsViewModel}}, Path=DeleteWalletCommand}"
                                     CommandParameter="{Binding Guid}" />
-                            </VerticalStackLayout.GestureRecognizers>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
-                            <Label Text="{Binding Currency}" FontSize="14" TextColor="Gray" />
-                        </VerticalStackLayout>
+            </CollectionView>
+        </Grid>
 
-                        <Button Grid.Column="1"
-                                Text="Delete"
-                                VerticalOptions="Center"
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:WalletsViewModel}}, Path=DeleteWalletCommand}"
-                                CommandParameter="{Binding Guid}" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-
-        </CollectionView>
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
     </Grid>
 </ContentPage>

@@ -38,7 +38,7 @@ public partial class WalletsViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            IEnumerable<WalletResponse> items = _walletService.GetAll();
+            IEnumerable<WalletResponse> items = await _walletService.GetAllAsync();
 
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
@@ -54,7 +54,7 @@ public partial class WalletsViewModel : BaseViewModel
             };
 
             Wallets.Clear();
-            foreach (var wallet in items)
+            foreach (WalletResponse wallet in items)
             {
                 Wallets.Add(wallet);
             }
@@ -124,7 +124,7 @@ public partial class WalletsViewModel : BaseViewModel
         IsBusy = true;
         try
         {
-            _walletService.Delete(new DeleteWalletRequest(walletGuid));
+            await _walletService.DeleteAsync(new DeleteWalletRequest(walletGuid));
             await Reload();
         }
         catch (Exception ex)

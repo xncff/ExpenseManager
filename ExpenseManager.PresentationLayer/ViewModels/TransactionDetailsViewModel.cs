@@ -71,7 +71,7 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
         IsBusy = true;
         try
         {
-            WalletResponse wallet = _walletService.GetByGuid(new GetWalletRequest(_walletGuid));
+            WalletResponse wallet = await _walletService.GetByGuidAsync(new GetWalletRequest(_walletGuid));
             _walletCurrency = wallet.Currency;
 
             if (IsNew)
@@ -83,14 +83,14 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
             }
             else
             {
-                TransactionResponse tx = _transactionService.GetByGuid(new GetTransactionRequest(_transactionGuid));
+                TransactionResponse tx = await _transactionService.GetByGuidAsync(new GetTransactionRequest(_transactionGuid));
                 Amount = tx.Amount;
                 Category = tx.Category;
                 Description = tx.Description;
                 Date = tx.Date;
             }
 
-            AmountInput = Amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            AmountInput = Amount.ToString();
             UpdateDisplay();
         }
         catch (Exception ex)
@@ -114,7 +114,7 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
     {
         if (!IsEditMode)
         {
-            AmountInput = Amount.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            AmountInput = Amount.ToString();
         }
         IsEditMode = !IsEditMode;
     }
@@ -122,8 +122,7 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
     [RelayCommand]
     private async Task Save()
     {
-        if (!decimal.TryParse(AmountInput, System.Globalization.NumberStyles.Any,
-                System.Globalization.CultureInfo.InvariantCulture, out decimal parsedAmount))
+        if (!decimal.TryParse(AmountInput, out decimal parsedAmount))
         {
             await Shell.Current.DisplayAlertAsync("Validation", "Amount must be a number.", "OK");
             return;
@@ -137,7 +136,7 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
         {
             if (IsNew)
             {
-                TransactionResponse created = _transactionService.Create(
+                TransactionResponse created = await _transactionService.CreateAsync(
                     new CreateTransactionRequest(_walletGuid, Amount, Category, description));
                 _transactionGuid = created.Guid;
                 Date = created.Date;
@@ -145,7 +144,7 @@ public partial class TransactionDetailsViewModel : BaseViewModel, IQueryAttribut
             }
             else
             {
-                _transactionService.Update(new UpdateTransactionRequest(_transactionGuid, Amount, Category, description));
+                await _transactionService.UpdateAsync(new UpdateTransactionRequest(_transactionGuid, Amount, Category, description));
             }
 
             IsEditMode = false;

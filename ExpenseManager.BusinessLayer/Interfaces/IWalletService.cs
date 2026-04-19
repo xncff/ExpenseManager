@@ -4,11 +4,11 @@ namespace ExpenseManager.BusinessLayer.Interfaces
 {
     public interface IWalletService
     {
-        WalletResponse Create(CreateWalletRequest request);
-        WalletResponse GetByGuid(GetWalletRequest request);
-        IEnumerable<WalletResponse> GetAll();
-        decimal GetTotal(GetWalletTotalRequest request);
-        WalletResponse Update(UpdateWalletRequest request);
-        void Delete(DeleteWalletRequest request);
+        Task<WalletResponse> CreateAsync(CreateWalletRequest request);
+        Task<WalletResponse> GetByGuidAsync(GetWalletRequest request);
+        Task<IEnumerable<WalletResponse>> GetAllAsync();
+        Task<decimal> GetTotalAsync(GetWalletTotalRequest request);
+        Task<WalletResponse> UpdateAsync(UpdateWalletRequest request);
+        Task DeleteAsync(DeleteWalletRequest request);
     }
 }

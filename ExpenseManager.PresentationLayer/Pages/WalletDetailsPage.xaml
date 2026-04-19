@@ -8,7 +8,8 @@
              x:DataType="vm:WalletDetailsViewModel"
              Title="Wallet Details">
 
-    <Grid RowDefinitions="Auto, *">
+    <Grid>
+        <Grid RowDefinitions="Auto, *" IsEnabled="{Binding IsNotBusy}">
 
         <VerticalStackLayout Grid.Row="0" Padding="16" Spacing="8" BackgroundColor="#f0f0f0">
 
@@ -76,5 +77,11 @@
 
         </Grid>
 
+        </Grid>
+
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
     </Grid>
 </ContentPage>

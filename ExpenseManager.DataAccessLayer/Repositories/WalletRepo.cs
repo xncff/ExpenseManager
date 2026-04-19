@@ -6,73 +6,42 @@ namespace ExpenseManager.DataAccessLayer.Repositories;
 
 public class WalletRepo : IWalletRepo
 {
-    private readonly InMemoryStorage _storage;
+    private readonly IStorage _storage;
 
-    public WalletRepo(InMemoryStorage storage)
+    public WalletRepo(IStorage storage)
     {
         _storage = storage;
     }
 
-    public Wallet Create(Wallet wallet)
+    public async Task<IEnumerable<Wallet>> GetAllAsync()
     {
-        _storage.Wallets.Add(new InMemoryStorage.WalletRecord(wallet.Guid, wallet.Name, wallet.Currency));
-        return wallet;
-    }
-
-    public Wallet GetByGuid(Guid guid)
-    {
-        var record = _storage.Wallets.FirstOrDefault(w => w.Guid == guid);
-        if (record is null)
+        List<Wallet> result = new List<Wallet>();
+        await foreach (WalletDbModel record in _storage.GetWalletsAsync())
         {
-            throw new KeyNotFoundException($"Wallet {guid} not found.");
+            result.Add(new Wallet(record.Guid, record.Name, record.Currency));
         }
-        return new Wallet(record.Guid, record.Name, record.Currency);
+        return result;
     }
 
-    public decimal GetTotal(Guid guid)
+    public async Task<Wallet?> GetByGuidAsync(Guid guid)
     {
-        return _storage.Transactions
-            .Where(tx => tx.WalletGuid == guid)
-            .Select(tx => tx.Amount)
-            .DefaultIfEmpty(0)
-            .Sum();
+        WalletDbModel? record = await _storage.GetWalletAsync(guid);
+        return record is null ? null : new Wallet(record.Guid, record.Name, record.Currency);
     }
 
-    public IEnumerable<Wallet> GetAll()
+    public async Task<decimal> GetTotalAsync(Guid guid)
     {
-        return _storage.Wallets
-            .Select(r => new Wallet(r.Guid, r.Name, r.Currency))
-            .ToList();
+        IEnumerable<TransactionDbModel> transactions = await _storage.GetTransactionsByWalletAsync(guid);
+        return transactions.Select(t => t.Amount).DefaultIfEmpty(0).Sum();
     }
 
-    public Wallet Update(Wallet wallet)
+    public Task SaveAsync(Wallet wallet)
     {
-        int index = FindIndex(wallet.Guid);
-        _storage.Wallets[index] = new InMemoryStorage.WalletRecord(wallet.Guid, wallet.Name, wallet.Currency);
-        return wallet;
+        return _storage.SaveWalletAsync(new WalletDbModel(wallet.Guid, wallet.Name, wallet.Currency));
     }
 
-    public void Delete(Guid guid)
+    public Task DeleteAsync(Guid guid)
     {
-        int index = FindIndex(guid);
-        _storage.Wallets.RemoveAt(index);
-
-        var orphanTransactions = _storage.Transactions.Where(t => t.WalletGuid == guid).ToList();
-        foreach (var tx in orphanTransactions)
-        {
-            _storage.Transactions.Remove(tx);
-        }
-    }
-
-    private int FindIndex(Guid guid)
-    {
-        for (int i = 0; i < _storage.Wallets.Count; i++)
-        {
-            if (_storage.Wallets[i].Guid == guid)
-            {
-                return i;
-            }
-        }
-        throw new KeyNotFoundException($"Wallet {guid} not found.");
+        return _storage.DeleteWalletAsync(guid);
     }
 }

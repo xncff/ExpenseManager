@@ -12,41 +12,42 @@ public class TransactionService : ITransactionService
 
     public TransactionService(ITransactionRepo repo)
     {
-        _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+        _repo = repo;
     }
 
-    public TransactionResponse Create(CreateTransactionRequest request)
+    public async Task<TransactionResponse> CreateAsync(CreateTransactionRequest request)
     {
-        Transaction toCreate = new Transaction(request.WalletGuid, request.Amount, request.Category, request.Description);
-        return _repo.Create(toCreate).ToDto();
+        Transaction transaction = new Transaction(request.WalletGuid, request.Amount, request.Category, request.Description);
+        await _repo.SaveAsync(transaction);
+        return transaction.ToDto();
     }
 
-    public TransactionResponse GetByGuid(GetTransactionRequest request)
+    public async Task<TransactionResponse> GetByGuidAsync(GetTransactionRequest request)
     {
-        return _repo.GetByGuid(request.Guid).ToDto();
+        Transaction transaction = await _repo.GetByGuidAsync(request.Guid)
+            ?? throw new KeyNotFoundException($"Transaction {request.Guid} not found.");
+        return transaction.ToDto();
     }
 
-    public IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionsByWalletRequest request)
+    public async Task<IEnumerable<TransactionResponse>> GetAllByWalletAsync(GetTransactionsByWalletRequest request)
     {
-        return _repo.GetAllByWallet(request.WalletGuid).Select(t => t.ToDto()).ToList();
+        IEnumerable<Transaction> transactions = await _repo.GetAllByWalletAsync(request.WalletGuid);
+        return transactions.Select(t => t.ToDto()).ToList();
     }
 
-    public IEnumerable<TransactionResponse> GetAll()
+    public async Task<TransactionResponse> UpdateAsync(UpdateTransactionRequest request)
     {
-        return _repo.GetAll().Select(t => t.ToDto()).ToList();
+        Transaction transaction = await _repo.GetByGuidAsync(request.Guid)
+            ?? throw new KeyNotFoundException($"Transaction {request.Guid} not found.");
+        transaction.Amount = request.Amount;
+        transaction.Category = request.Category;
+        transaction.Description = request.Description;
+        await _repo.SaveAsync(transaction);
+        return transaction.ToDto();
     }
 
-    public TransactionResponse Update(UpdateTransactionRequest request)
+    public Task DeleteAsync(DeleteTransactionRequest request)
     {
-        Transaction toUpdate = _repo.GetByGuid(request.Guid);
-        toUpdate.Amount = request.Amount;
-        toUpdate.Category = request.Category;
-        toUpdate.Description = request.Description;
-        return _repo.Update(toUpdate).ToDto();
-    }
-
-    public void Delete(DeleteTransactionRequest request)
-    {
-        _repo.Delete(request.Guid);
+        return _repo.DeleteAsync(request.Guid);
     }
 }

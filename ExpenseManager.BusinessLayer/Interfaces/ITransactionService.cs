@@ -4,11 +4,10 @@ namespace ExpenseManager.BusinessLayer.Interfaces
 {
     public interface ITransactionService
     {
-        TransactionResponse Create(CreateTransactionRequest request);
-        TransactionResponse GetByGuid(GetTransactionRequest request);
-        IEnumerable<TransactionResponse> GetAllByWallet(GetTransactionsByWalletRequest request);
-        IEnumerable<TransactionResponse> GetAll();
-        TransactionResponse Update(UpdateTransactionRequest request);
-        void Delete(DeleteTransactionRequest request);
+        Task<TransactionResponse> CreateAsync(CreateTransactionRequest request);
+        Task<TransactionResponse> GetByGuidAsync(GetTransactionRequest request);
+        Task<IEnumerable<TransactionResponse>> GetAllByWalletAsync(GetTransactionsByWalletRequest request);
+        Task<TransactionResponse> UpdateAsync(UpdateTransactionRequest request);
+        Task DeleteAsync(DeleteTransactionRequest request);
     }
 }
