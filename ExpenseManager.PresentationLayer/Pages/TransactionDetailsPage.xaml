@@ -3,34 +3,55 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ExpenseManager.PresentationLayer.ViewModels"
-             xmlns:dtos="clr-namespace:ExpenseManager.BusinessLayer.Dtos;assembly=ExpenseManager.BusinessLayer"
              x:Class="ExpenseManager.PresentationLayer.Pages.TransactionDetailsPage"
              x:DataType="vm:TransactionDetailsViewModel"
              Title="Transaction Details">
-    <VerticalStackLayout Padding="20" Spacing="16">
 
-        <Label Text="{Binding AmountText}"
-               TextColor="{Binding AmountColor}"
-               FontSize="32"
-               FontAttributes="Bold"
-               HorizontalOptions="Center" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="16">
 
-        <BoxView HeightRequest="1" Color="LightGray" />
+            <VerticalStackLayout IsVisible="{Binding IsReadMode}" Spacing="16">
 
-        <VerticalStackLayout Spacing="8">
-            <Label Text="Category" TextColor="Gray" FontSize="13" />
-            <Label Text="{Binding Transaction.Category, Converter={StaticResource EnumToDisplayName}}" FontSize="16" />
+                <Label Text="{Binding AmountText}"
+                       TextColor="{Binding AmountColor}"
+                       FontSize="32"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+
+                <BoxView HeightRequest="1" Color="LightGray" />
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Category" TextColor="Gray" FontSize="13" />
+                    <Label Text="{Binding Category, Converter={StaticResource EnumToDisplayName}}" FontSize="16" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Description" TextColor="Gray" FontSize="13" />
+                    <Label Text="{Binding Description}" FontSize="16" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Date" TextColor="Gray" FontSize="13" />
+                    <Label Text="{Binding Date}" FontSize="16" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <VerticalStackLayout IsVisible="{Binding IsEditMode}" Spacing="12">
+
+                <Label Text="Amount" TextColor="Gray" FontSize="13" />
+                <Entry Text="{Binding AmountInput}" Keyboard="Numeric" />
+
+                <Label Text="Category" TextColor="Gray" FontSize="13" />
+                <Picker ItemsSource="{Binding AvailableCategories}"
+                        SelectedItem="{Binding Category}"
+                        ItemDisplayBinding="{Binding Converter={StaticResource EnumToDisplayName}}" />
+
+                <Label Text="Description" TextColor="Gray" FontSize="13" />
+                <Entry Text="{Binding Description}" />
+
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
-
-        <VerticalStackLayout Spacing="8">
-            <Label Text="Description" TextColor="Gray" FontSize="13" />
-            <Label Text="{Binding Transaction.DescriptionForUI}" FontSize="16" />
-        </VerticalStackLayout>
-        
-        <VerticalStackLayout Spacing="8">
-            <Label Text="Date" TextColor="Gray" FontSize="13" />
-            <Label Text="{Binding Transaction.Date}" FontSize="16" />
-        </VerticalStackLayout>
-
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
